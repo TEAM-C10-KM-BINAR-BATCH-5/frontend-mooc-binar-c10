@@ -6,12 +6,7 @@ export default function Login() {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 h-screen w-full">
       <div className="hidden sm:flex items-center justify-center h-screen bg-costumeBlue">
-        <img
-          className="blox mx-auto w-56 h-56"
-          src={belajarImg}
-          alt=""
-          srcset=""
-        />
+        <img className="blox mx-auto w-56 h-56" src={belajarImg} alt="" />
       </div>
 
       <div className="flex flex-col justify-center items-center col-span-2">
@@ -37,7 +32,7 @@ export default function Login() {
                 className="inline-block align-baseline font-bold text-sm text-costumeBlue"
                 href="#"
               >
-                Lupa kada sandi
+                Lupa kada sandi?
               </a>
             </div>
             <div className="relative">
