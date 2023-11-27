@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         costumeBlue: "rgba(97, 72, 255, 1)",
+        lightBlue: "#EBF3FC",
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],

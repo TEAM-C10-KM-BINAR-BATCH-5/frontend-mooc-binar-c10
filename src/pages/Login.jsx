@@ -1,12 +1,17 @@
-import React from "react";
+import { useState } from "react";
 import belajarImg from "../assets/Belajar_white_3.png";
 import { Eye } from "@phosphor-icons/react";
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 h-screen w-full">
       <div className="hidden sm:flex items-center justify-center h-screen bg-costumeBlue">
-        <img className="blox mx-auto w-56 h-56" src={belajarImg} alt="" />
+        <img className="blox mx-auto w-56" src={belajarImg} alt="" />
       </div>
 
       <div className="flex flex-col justify-center items-center col-span-2">
@@ -38,11 +43,14 @@ export default function Login() {
             <div className="relative">
               <input
                 className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Masukan password"
               />
-              <button className="absolute top-3 end-2">
-                <Eye size={32} color="#8A8A8A" />
+              <button
+                className="absolute top-3 end-2"
+                onClick={(e) => togglePasswordVisibility(e)}
+              >
+                <Eye size={28} color="#8A8A8A" />
               </button>
             </div>
           </div>
