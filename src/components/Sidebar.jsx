@@ -1,4 +1,4 @@
-import belajarImg from "../assets/Belajar_white_3.png";
+import logo from "../assets/logo-learnhub-white.svg";
 import { SIDEBAR_LINKS } from "../libs/Sidebar-menu";
 import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
@@ -16,18 +16,19 @@ function SidebarLink({ link }) {
         linkClass
       )}
     >
-      {link.label}
+      {link.icon}
+      <span className="hidden sm:block">{link.label}</span>
     </Link>
   );
 }
 
 export default function Sidebar() {
   return (
-    <div className="bg-costumeBlue w-56 flex flex-col">
-      <div className="flex items-center justify-center py-12">
-        <img src={belajarImg} className="w-32" alt="" />
+    <div className="bg-costumeBlue w-24 sm:w-56 flex flex-col">
+      <div className="flex items-center justify-center py-10">
+        <img src={logo} className="w-16 sm:w-28" alt="" />
       </div>
-      <div className="py-5 p-5 flex flex-1 flex-col gap-4">
+      <div className="py-2 p-5 flex flex-1 flex-col gap-4">
         {SIDEBAR_LINKS.map((link) => (
           <SidebarLink key={link.key} link={link} />
         ))}

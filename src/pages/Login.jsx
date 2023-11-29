@@ -1,5 +1,5 @@
 import { useState } from "react";
-import belajarImg from "../assets/Belajar_white_3.png";
+import logo from "../assets/logo-learnhub-white.svg";
 import { Eye } from "@phosphor-icons/react";
 
 export default function Login() {
@@ -9,9 +9,9 @@ export default function Login() {
     setShowPassword(!showPassword);
   };
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 h-screen w-full">
+    <div className="grid grid-cols-2 sm:grid-cols-3 h-screen w-full gap-3">
       <div className="hidden sm:flex items-center justify-center h-screen bg-costumeBlue">
-        <img className="blox mx-auto w-56" src={belajarImg} alt="" />
+        <img className="blox mx-auto w-56" src={logo} alt="" />
       </div>
 
       <div className="flex flex-col justify-center items-center col-span-2">
