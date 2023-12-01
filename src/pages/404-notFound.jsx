@@ -2,7 +2,7 @@ import React from "react";
 import testImg from "../assets/404.jpg";
 import { useNavigate } from "react-router-dom";
 
-export default function Not_found() {
+export default function NotFound() {
   const navigate = useNavigate();
 
   const redirectToHome = () => {

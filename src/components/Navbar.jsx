@@ -1,20 +1,12 @@
+import { MagnifyingGlass } from "@phosphor-icons/react";
 const Navbar = () => {
   return (
-    <nav className="bg-lightBlue shadow p-3">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center">
-          <span className="text-costumeBlue text-xl font-bold  mx-14 py-5  ">
-            Hi, Admin
-          </span>
-        </div>
-        {/* Search Input */}
+    <nav className="bg-lightBlue shadow">
+      <div className="flex md:flex-row flex-col justify-between md:items-center p-2 gap-2">
+        <div className="font-bold text-sm sm:text-xl">Hi, Admin</div>
         <div className="relative">
-          <input
-            type="text"
-            placeholder="Cari..."
-            className="bg-white border-2 border-indigo-500 rounded-lg py-2 px-6 focus:outline-none focus:border-rose-500"
-          />
-          <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none">
+          <input placeholder="Cari..." className="w-full p-2 rounded-lg" />
+          <button className="absolute top-1.5 end-2">
             <span>
               <svg
                 width="28"

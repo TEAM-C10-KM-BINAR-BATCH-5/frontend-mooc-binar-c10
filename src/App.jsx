@@ -3,9 +3,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Layout from "./components/Layout";
 import Kelas from "./pages/Kelas";
-import Not_found from "./pages/404-notFound";
+import NotFound from "./pages/404-notFound";
 
-// check component/layout
 function App() {
   return (
     <Router>
@@ -15,7 +14,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="kelas" element={<Kelas />} />
         </Route>
-        <Route path="*" element={<Not_found />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

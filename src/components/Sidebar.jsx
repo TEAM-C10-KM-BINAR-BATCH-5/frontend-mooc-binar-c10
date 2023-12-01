@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
 
 const linkClass =
-  "flex items-center gap-2 font-bold text-md px-3 py-2 hover:bg-blue-500 hover:no-underline active:bg-indigo-600 rounded-sm text-base";
+  "flex items-center gap-2 font-bold text-md px-3 py-2 hover:bg-blue-500 hover:no-underline active:bg-indigo-600 rounded-lg text-base";
 
 function SidebarLink({ link }) {
   const { patchname } = useLocation();
@@ -16,7 +16,7 @@ function SidebarLink({ link }) {
         linkClass
       )}
     >
-      {link.icon}
+      <span>{link.icon}</span>
       <span className="hidden sm:block">{link.label}</span>
     </Link>
   );
@@ -24,11 +24,11 @@ function SidebarLink({ link }) {
 
 export default function Sidebar() {
   return (
-    <div className="bg-costumeBlue w-24 sm:w-56 flex flex-col">
+    <div className="bg-costumeBlue w-12 sm:w-56 flex flex-col items-center transition-all">
       <div className="flex items-center justify-center py-10">
-        <img src={logo} className="w-16 sm:w-28" alt="" />
+        <img src={logo} className="w-10 sm:w-20" alt="" />
       </div>
-      <div className="py-2 p-5 flex flex-1 flex-col gap-4">
+      <div className="py-2 p-5 flex flex-1 flex-col gap-4 items-left">
         {SIDEBAR_LINKS.map((link) => (
           <SidebarLink key={link.key} link={link} />
         ))}
