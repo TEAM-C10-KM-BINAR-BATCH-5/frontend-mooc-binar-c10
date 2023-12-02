@@ -1,35 +1,31 @@
 import { Funnel } from "@phosphor-icons/react/dist/ssr";
 import { MagnifyingGlass, PlusCircle } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { getCourses } from "../libs/Api-libs";
+import AddCourseModal from "./Modal/AddCourse";
 
 export default function TableCourse() {
+  const [showModal, setShowModal] = useState(false);
   const [course, setCourse] = useState([]);
-
   useEffect(() => {
-    getCourse();
+    fetchCourses();
   }, []);
 
-  const getCourse = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/course`
-      );
-      setCourse(response.data.data);
-      console.log(response.data.data);
-    } catch (error) {
-      console.error("Error fetching course data:", error);
-    }
+  const fetchCourses = async () => {
+    const coursesData = await getCourses();
+    setCourse(coursesData);
   };
+
   return (
     <>
       <div className="px-4 pt-3 pb-4 rounded-sm flex-1 whitespace-nowrap">
         <div className="flex md:flex-row flex-col justify-between gap-2">
           <div className="text-sm sm:text-xl">
-            <strong>Status Pembayaran</strong>
+            <strong>Kelola Course</strong>
           </div>
           <div className=" flex flex-cols gap-2">
             <button
+              onClick={() => setShowModal(true)}
               type="button"
               className="bg-costumeBlue border border-costumeBlue border-solid rounded-xl flex items-center px-3 p-1"
             >
@@ -114,6 +110,10 @@ export default function TableCourse() {
           </table>
         </div>
       </div>
+      <AddCourseModal
+        isVisible={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </>
   );
 }

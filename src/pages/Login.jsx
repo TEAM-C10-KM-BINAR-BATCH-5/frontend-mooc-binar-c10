@@ -20,12 +20,12 @@ export default function Login() {
         <form className="w-full max-w-md xs:max-w-xs mx-auto relative">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Id Admin
+              Email
             </label>
             <input
               className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text"
-              placeholder="Id Admin"
+              placeholder="Email Admin"
             />
           </div>
           <div className="mb-4">

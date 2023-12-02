@@ -4,15 +4,15 @@ import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
 
 const linkClass =
-  "flex items-center gap-2 font-bold text-md px-3 py-2 hover:bg-blue-500 hover:no-underline active:bg-indigo-600 rounded-lg text-base";
+  "flex items-center gap-2 font-bold text-md px-3 py-2 hover:bg-blue-400 hover:no-underline active:bg-indigo-600 rounded-lg text-base";
 
 function SidebarLink({ link }) {
-  const { patchname } = useLocation();
+  const { pathname } = useLocation();
   return (
     <Link
       to={link.path}
       className={classNames(
-        patchname === link.path ? "bg-indigo-500 text-white" : "text-white",
+        pathname === link.path ? "bg-blue-500 text-white" : "text-white",
         linkClass
       )}
     >
