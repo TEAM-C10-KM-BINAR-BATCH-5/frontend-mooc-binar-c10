@@ -1,7 +1,8 @@
 import React from "react";
 import warningImg from "../../assets/warning.png";
 
-export default function Logout() {
+export default function Logout({ isVisible, onClose }) {
+  if (!isVisible) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white w-[500px] p-2 rounded-lg flex flex-col relative">
@@ -14,6 +15,7 @@ export default function Logout() {
         <div className="flex flex-cols gap-2 justify-around">
           <button
             type="button"
+            onClick={() => onClose()}
             className="bg-emerald-500 p-5 w-full rounded-xl"
           >
             <h1 className="text-xl font-bold text-white ">Gak jadi</h1>
