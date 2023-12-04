@@ -10,7 +10,6 @@ export default function AddCourseModal({ isVisible, onClose }) {
   return (
     <div
       id="wrapper"
-      onClick={handleClose}
       className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center"
     >
       <div className="bg-white w-[720px] p-2 rounded-lg flex flex-col relative">

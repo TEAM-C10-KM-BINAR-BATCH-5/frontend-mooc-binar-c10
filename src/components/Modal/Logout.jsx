@@ -4,7 +4,7 @@ import warningImg from "../../assets/warning.png";
 export default function Logout({ isVisible, onClose }) {
   if (!isVisible) return null;
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[1000]">
       <div className="bg-white w-[500px] p-2 rounded-lg flex flex-col relative">
         <p className="py-5 text-xl font-bold text-costumeBlue text-center">
           Yakin ingin Logout?

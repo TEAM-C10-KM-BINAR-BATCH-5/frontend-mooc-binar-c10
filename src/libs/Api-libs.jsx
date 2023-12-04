@@ -12,3 +12,15 @@ export const getCourses = async () => {
     return [];
   }
 };
+
+export const getCoursesById = async (id) => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/course/${id}`
+    );
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching course data:", error);
+    return [];
+  }
+};

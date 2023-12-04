@@ -3,6 +3,7 @@ import { MagnifyingGlass, PlusCircle } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
 import { getCourses } from "../libs/Api-libs";
 import AddCourseModal from "./Modal/AddCourse";
+import { Link } from "react-router-dom";
 
 export default function TableCourse() {
   const [showModal, setShowModal] = useState(false);
@@ -14,6 +15,10 @@ export default function TableCourse() {
   const fetchCourses = async () => {
     const coursesData = await getCourses();
     setCourse(coursesData);
+  };
+  const handleKelolaClick = (Id) => {
+    history.push(`/kelola-course/${Id}`);
+    // console.log(`Kelola kursus dengan ID: ${Id}`);
   };
 
   return (
@@ -96,9 +101,12 @@ export default function TableCourse() {
                   <td className="p-3 text-sm text-gray-700 ">{item.price}</td>
                   <td>
                     <div className="flex gap-2 items-center justify-center">
-                      <button className="rounded-lg px-2 py-1 bg-costumeBlue text-white font-semibold">
-                        kelola
-                      </button>
+                      <Link
+                        to={`/kelola-course/${item.id}`}
+                        className="bg-blue-600 text-white px-2 py-1 rounded-lg text-center font-semibold"
+                      >
+                        Kelola
+                      </Link>
                       <button className="rounded-lg px-2 py-1 bg-red-600 text-white font-semibold">
                         Hapus
                       </button>
