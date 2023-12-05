@@ -1,9 +1,9 @@
-import logo from "../assets/logo-learnhub-white.svg";
-import { SIDEBAR_LINKS } from "../libs/Sidebar-menu";
+import logo from "../../assets/logo-learnhub-white.svg";
+import { SIDEBAR_LINKS } from "../../libs/Sidebar-menu";
 import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { useState } from "react";
-import Logout from "./Modal/Logout";
+import Logout from "../Modal/Logout";
 import { SignOut } from "@phosphor-icons/react";
 
 const linkClass =

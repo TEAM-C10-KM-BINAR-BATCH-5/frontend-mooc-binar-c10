@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import Layout from "./components/Layout";
+import Layout from "./components/shared/Layout";
 import Kelas from "./pages/Kelas";
 import NotFound from "./pages/404-notFound";
 import KelolaCourse from "./pages/KelolaCourse";

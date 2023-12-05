@@ -26,10 +26,9 @@ export default function KelolaCourse() {
           <h1>{courseData.title}</h1>
           <p>About: {courseData.about}</p>
           <p>objective: {courseData.objective}</p>
-          {/* Tambahkan tampilan informasi lainnya dari data API di sini */}
         </div>
       ) : (
-        <div className="flex item-center justify-center h-screen w-full py-10">
+        <div className="flex items-center justify-center h-screen w-full py-10">
           <div className="custom-loader"></div>
         </div>
       )}

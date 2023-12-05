@@ -16,10 +16,6 @@ export default function TableCourse() {
     const coursesData = await getCourses();
     setCourse(coursesData);
   };
-  const handleKelolaClick = (Id) => {
-    history.push(`/kelola-course/${Id}`);
-    // console.log(`Kelola kursus dengan ID: ${Id}`);
-  };
 
   return (
     <>
@@ -103,7 +99,7 @@ export default function TableCourse() {
                     <div className="flex gap-2 items-center justify-center">
                       <Link
                         to={`/kelola-course/${item.id}`}
-                        className="bg-blue-600 text-white px-2 py-1 rounded-lg text-center font-semibold"
+                        className="bg-costumeBlue text-white px-2 py-1 rounded-lg text-center font-semibold"
                       >
                         Kelola
                       </Link>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import logo from "../assets/logo-learnhub-white.svg";
+import logoMobile from "../assets/logo.png";
 import { Eye } from "@phosphor-icons/react";
 
 export default function Login() {
@@ -9,15 +10,18 @@ export default function Login() {
     setShowPassword(!showPassword);
   };
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 h-screen w-full gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 h-screen w-full gap-2">
       <div className="hidden sm:flex items-center justify-center h-screen bg-costumeBlue">
         <img className="blox mx-auto w-56" src={logo} alt="" />
       </div>
 
       <div className="flex flex-col justify-center items-center col-span-2">
-        <h1 className="text-costumeBlue text-4xl font-bold py-5">Login</h1>
+        <img className="sm:hidden w-28" src={logoMobile} alt="" />
+        <h1 className="text-costumeBlue text-md sm:text-4xl font-bold">
+          Login Admin
+        </h1>
         <br />
-        <form className="w-full max-w-md xs:max-w-xs mx-auto relative">
+        <form className="w-[350px] sm:w-full max-w-md xs:max-w-xs mx-auto relative">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Email

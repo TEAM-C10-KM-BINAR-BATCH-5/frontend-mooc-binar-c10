@@ -24,3 +24,28 @@ export const getCoursesById = async (id) => {
     return [];
   }
 };
+
+export const addCourse = async (courseData) => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/course`,
+      courseData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding course:", error);
+    throw error; // Kembalikan error agar bisa ditangani di komponen yang menggunakan fungsi ini
+  }
+};
+
+export const getCategory = async () => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/category`
+    );
+    return response.data.data.categories;
+  } catch (error) {
+    console.log("Error fetching category:", error);
+    throw error;
+  }
+};
