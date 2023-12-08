@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getCourses } from "../libs/Api-libs";
 import AddCourseModal from "./Modal/AddCourse";
 import { Link } from "react-router-dom";
+import FilterButton from "./FilterButton";
 
 export default function TableCourse() {
   const [showModal, setShowModal] = useState(false);
@@ -38,7 +39,7 @@ export default function TableCourse() {
               />
               <span className="font-bold text-white">Tambah</span>
             </button>
-            <button
+            {/* <button
               type="button"
               className="border border-costumeBlue border-solid rounded-xl flex items-center px-2 p-0.5"
             >
@@ -48,7 +49,8 @@ export default function TableCourse() {
                 className="mr-2 text-costumeBlue"
               />
               <span className="font-bold text-costumeBlue">Filter</span>
-            </button>
+            </button> */}
+            <FilterButton />
             <button>
               <MagnifyingGlass
                 size={24}
