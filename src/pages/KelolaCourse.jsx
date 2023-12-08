@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import EditCourse from "../components/EditCourse";
 import EditModul from "../components/editModul";
 

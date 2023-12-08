@@ -1,8 +1,27 @@
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function Layout() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const profile = async () => {
+      try {
+        await axios.get(`${import.meta.env.VITE_API_BASE_URL}/auth/profile`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+      } catch (err) {
+        navigate("/login");
+      }
+    };
+    profile();
+  }, []);
+
   return (
     <div className="bg-neutral-100 h-screen w-screen overflow-hidden flex flex-row">
       <Sidebar />
