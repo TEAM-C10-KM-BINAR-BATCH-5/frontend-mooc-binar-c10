@@ -1,9 +1,20 @@
-import React from "react";
+import { useState } from "react";
 import { recentOrderData } from "../libs/Table-dummy-data";
 import { Funnel } from "@phosphor-icons/react/dist/ssr";
 import { MagnifyingGlass } from "@phosphor-icons/react";
+import Pagination from "./Pagination";
 
 function Table() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); // Ganti sesuai dengan jumlah item yang diinginkan per halaman
+
+  // Hitung indeks awal dan akhir dari item yang akan ditampilkan
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = recentOrderData.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
       <div className="px-4 pt-3 pb-4 rounded-sm flex-1 whitespace-nowrap">
@@ -60,7 +71,7 @@ function Table() {
               </tr>
             </thead>
             <tbody>
-              {recentOrderData.map((order) => (
+              {currentItems.map((order) => (
                 <tr key={order.id}>
                   <td className="p-3 text-sm text-gray-700 ">{order.id}</td>
                   <td className="p-3 text-sm text-gray-700 ">
@@ -85,6 +96,17 @@ function Table() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="flex justify-center mt-4">
+          {recentOrderData.length > itemsPerPage && (
+            <Pagination
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+              totalItems={recentOrderData.length}
+              paginate={paginate}
+            />
+          )}
         </div>
       </div>
     </>
