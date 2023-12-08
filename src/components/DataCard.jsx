@@ -1,4 +1,3 @@
-import React from "react";
 import icons from "../assets/icon.png";
 
 export default function DataCard() {

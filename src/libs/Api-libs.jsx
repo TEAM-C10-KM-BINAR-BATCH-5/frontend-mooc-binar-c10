@@ -8,7 +8,7 @@ export const getCourses = async () => {
     );
     return response.data.data;
   } catch (error) {
-    console.error("Error fetching course data:", error);
+    console.error("Error fetching course data:", error.message);
     return [];
   }
 };
@@ -33,7 +33,7 @@ export const addCourse = async (courseData) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Error adding course:", error);
+    console.error("Error adding course:", error.message);
     throw error; // Kembalikan error agar bisa ditangani di komponen yang menggunakan fungsi ini
   }
 };
