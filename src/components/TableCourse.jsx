@@ -1,4 +1,3 @@
-import { Funnel } from "@phosphor-icons/react/dist/ssr";
 import { MagnifyingGlass, PlusCircle } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { getCourses } from "../libs/Api-libs";

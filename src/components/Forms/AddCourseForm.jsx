@@ -2,13 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { getCategory } from "../../libs/Api-libs";
 import { useRecoilState } from "recoil";
 import { addCourseFormState } from "../../atom/formAtom";
-import {
-  Image,
-  ImageSquare,
-  PlusSquare,
-  Upload,
-  UploadSimple,
-} from "@phosphor-icons/react";
+import { UploadSimple } from "@phosphor-icons/react";
 
 export default function AddCourseForm() {
   const [categories, setCategories] = useState([]);
