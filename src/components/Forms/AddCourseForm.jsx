@@ -1,11 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCategory } from "../../libs/Api-libs";
 import { useRecoilState } from "recoil";
 import { addCourseFormState } from "../../atom/formAtom";
+import {
+  Image,
+  ImageSquare,
+  PlusSquare,
+  Upload,
+  UploadSimple,
+} from "@phosphor-icons/react";
 
 export default function AddCourseForm() {
   const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useRecoilState(addCourseFormState);
+  const imagePickerRef = useRef();
 
   useEffect(() => {
     async function fetchCategories() {
@@ -118,13 +126,17 @@ export default function AddCourseForm() {
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Image
           </label>
-          <input
-            className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="file"
-            placeholder="Pilih kategori"
-            onChange={handleInputChange}
-            name="image"
-          />
+          <div onClick={() => imagePickerRef.current.click()}>
+            <UploadSimple size={32} className="text-costumeBlue" />
+            <input
+              className="hidden appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="file"
+              placeholder="Pilih kategori"
+              onChange={handleInputChange}
+              name="image"
+              ref={imagePickerRef}
+            />
+          </div>
           {formData.image && (
             <div>
               <img src={URL.createObjectURL(formData.image)} alt="Preview" />
