@@ -12,7 +12,7 @@ export default function Logout({ isVisible, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[1000]">
-      <div className="bg-white w-[500px] p-2 rounded-lg flex flex-col relative">
+      <div className="bg-white w-[350px] lg:w-[500px] p-2 rounded-lg flex flex-col gap-5 relative">
         <p className="py-5 text-xl font-bold text-costumeBlue text-center">
           Yakin ingin Logout?
         </p>
@@ -23,16 +23,16 @@ export default function Logout({ isVisible, onClose }) {
           <button
             type="button"
             onClick={() => onClose()}
-            className="bg-emerald-500 p-3 w-full rounded-xl"
+            className="bg-costumeBlue p-3 w-full rounded-lg"
           >
-            <h1 className="text-xl font-bold text-white ">Gak jadi</h1>
+            <h1 className="text-xl font-bold  text-white ">Tidak</h1>
           </button>
           <button
             type="button"
-            className="bg-red-500 p-3 w-full rounded-xl"
+            className="bg-gray-300 p-3 w-full rounded-lg"
             onClick={handleLogout}
           >
-            <h1 className="text-xl font-bold text-white">keluar</h1>
+            <h1 className="text-xl font-bold text-costumeBlue">Ya</h1>
           </button>
         </div>
       </div>

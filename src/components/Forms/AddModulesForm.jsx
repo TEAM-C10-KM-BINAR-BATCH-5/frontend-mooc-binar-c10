@@ -55,6 +55,12 @@ export default function AddModuleForm() {
             +
           </button>
         </div>
+        <button
+          onClick={(e) => e.preventDefault()}
+          className="w-full bg-costumeBlue text-white mt-8 rounded-lg p-3"
+        >
+          Simpan
+        </button>
       </form>
     </div>
   );
