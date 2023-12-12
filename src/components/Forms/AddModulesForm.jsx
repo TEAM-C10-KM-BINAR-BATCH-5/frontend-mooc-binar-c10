@@ -3,8 +3,7 @@ import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { addCourseFormState, addModuleFormState } from "../../atom/formAtom";
 import axios from "axios";
 import { modalState } from "../../atom/modalAtom";
-import { useState } from "react";
-import LoadingModal from "../Modal/LoadingModal";
+
 import { loadingState } from "../../atom/loadingAtom";
 
 export default function AddModuleForm() {
