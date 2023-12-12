@@ -79,6 +79,32 @@ export default function AddCourseForm() {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
+            Deskripsi
+          </label>
+          <textarea
+            className="appearance-none border rounded-lg w-full py-5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
+            type="text"
+            placeholder="Masukan deskripsi kelas"
+            name="about"
+            onChange={handleInputChange}
+            value={formData.about}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Tujuan
+          </label>
+          <input
+            className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            placeholder="Masukan tujuan kelas"
+            name="objective"
+            onChange={handleInputChange}
+            value={formData.objective}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
             Instruktur
           </label>
           <input
@@ -88,6 +114,32 @@ export default function AddCourseForm() {
             onChange={handleInputChange}
             value={formData.instructor}
             name="instructor"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Link Telegram
+          </label>
+          <input
+            className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            placeholder="Masukan link telegram kelas"
+            name="telegramLink"
+            onChange={handleInputChange}
+            value={formData.telegramLink}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Onboarding
+          </label>
+          <input
+            className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            placeholder="Masukan pnboarding"
+            name="onboarding"
+            onChange={handleInputChange}
+            value={formData.onboarding}
           />
         </div>
         <div className="mb-4">
