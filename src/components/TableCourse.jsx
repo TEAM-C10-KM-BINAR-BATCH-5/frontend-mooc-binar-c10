@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import FilterButton from "./FilterButton";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { modalState } from "../atom/modalAtom";
 
 export default function TableCourse() {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useRecoilState(modalState);
   const [course, setCourse] = useState([]);
   useEffect(() => {
     fetchCourses();

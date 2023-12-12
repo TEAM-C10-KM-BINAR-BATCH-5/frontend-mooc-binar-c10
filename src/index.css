@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .custom-loader {
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
   background: conic-gradient(#0000 10%, #766df4);
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 16px), #000 0);

@@ -19,8 +19,17 @@ export const addCourseFormState = atom({
 
 export const addModuleFormState = atom({
   key: "addModuleFormState",
-  default: {
-    title: "",
-    videoLink: "",
-  },
+  default: [
+    {
+      title: "",
+      videos: [
+        {
+          videoNo: 0,
+          videoTitle: "",
+          videoLink: "",
+          videoDuration: 0,
+        },
+      ],
+    },
+  ],
 });

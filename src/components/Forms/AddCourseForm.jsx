@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { getCategory } from "../../libs/Api-libs";
 import { useRecoilState } from "recoil";
 import { addCourseFormState } from "../../atom/formAtom";
-import { UploadSimple } from "@phosphor-icons/react";
+import { PencilSimpleLine, UploadSimple } from "@phosphor-icons/react";
 
 export default function AddCourseForm() {
   const [categories, setCategories] = useState([]);
@@ -94,14 +94,32 @@ export default function AddCourseForm() {
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Level
           </label>
-          <input
+          <select
             className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            placeholder="Masukan level kelas"
-            onChange={handleInputChange}
             value={formData.level}
+            onChange={handleInputChange}
             name="level"
-          />
+          >
+            <option value="">Pilih level</option>
+            <option
+              value="Beginner"
+              selected={formData.level == "Beginner" ? true : false}
+            >
+              Beginner
+            </option>
+            <option
+              value="Intermediate"
+              selected={formData.level == "Intermediate" ? true : false}
+            >
+              Intermediate
+            </option>
+            <option
+              value="Advance"
+              selected={formData.level == "Advance" ? true : false}
+            >
+              Advance
+            </option>
+          </select>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -120,8 +138,29 @@ export default function AddCourseForm() {
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Image
           </label>
-          <div onClick={() => imagePickerRef.current.click()}>
-            <UploadSimple size={32} className="text-costumeBlue" />
+          {formData.image && (
+            <div>
+              <img src={URL.createObjectURL(formData.image)} alt="Preview" />
+            </div>
+          )}
+          <div
+            onClick={() => imagePickerRef.current.click()}
+            className="cursor-pointer"
+          >
+            <div className="flex flex-row gap-2 w-fit rounded-lg mt-2 items-center p-3 border-2 text-costumeBlue border-costumeBlue text-sm">
+              {!formData.image ? (
+                <>
+                  <UploadSimple size={22} className="text-costumeBlue" />
+                  Upload Gambar
+                </>
+              ) : (
+                <>
+                  <PencilSimpleLine size={22} className="text-costumeBlue" />
+                  Edit Gambar
+                </>
+              )}
+            </div>
+
             <input
               className="hidden appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="file"
@@ -129,13 +168,9 @@ export default function AddCourseForm() {
               onChange={handleInputChange}
               name="image"
               ref={imagePickerRef}
+              accept="image/*"
             />
           </div>
-          {formData.image && (
-            <div>
-              <img src={URL.createObjectURL(formData.image)} alt="Preview" />
-            </div>
-          )}
         </div>
       </form>
     </>
