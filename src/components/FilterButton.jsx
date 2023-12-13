@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { Funnel } from "@phosphor-icons/react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { courseFilterState } from "../atom/courseAtom";
 
 const FilterButton = () => {
   const [showPopover, setShowPopover] = useState(false);
 
   const [courseFilter, setCourseFilter] = useRecoilState(courseFilterState);
+  const resetCourseFilter = useResetRecoilState(courseFilterState);
 
   // toggle popover
   const togglePopover = () => {
@@ -105,6 +106,15 @@ const FilterButton = () => {
                   <span>Advance</span>
                 </label>
               </div>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  resetCourseFilter();
+                }}
+                className="mt-3 p-2 border-costumeBlue border-2 rounded-lg text-costumeBlue opacity-75 text-xs hover:opacity-50"
+              >
+                Reset Filter
+              </button>
             </form>
           </div>
         </div>
