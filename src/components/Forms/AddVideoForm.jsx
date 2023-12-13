@@ -93,6 +93,8 @@ export default function AddVideoForm({ moduleIndex }) {
                 placeholder="Masukan link video"
                 name="videoDuration"
                 onChange={(e) => handleInputChange(e, index)}
+                min={1}
+                onWheel={(e) => e.target.blur()}
                 defaultValue={formData[moduleIndex].videos[index].videoDuration}
               />
             </div>

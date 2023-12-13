@@ -5,6 +5,7 @@ import axios from "axios";
 import { modalState } from "../../atom/modalAtom";
 
 import { loadingState } from "../../atom/loadingAtom";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function AddModuleForm() {
   const [formData, setFormData] = useRecoilState(addModuleFormState);
@@ -128,57 +129,66 @@ export default function AddModuleForm() {
   };
 
   return (
-    <div className="w-full h-full">
-      <p className="py-5 text-costumeBlue font-bold text-2xl text-center">
-        Tambah Modul
-      </p>
-      <form className="w-full max-w-md xs:max-w-xs mx-auto relative">
-        {formData.map((_, index) => (
-          <div
-            key={index}
-            className=" w-full shadow-md border-2 border-gray-300 p-5 rounded-lg m-3"
-          >
-            <p className="py-5 text-costumeBlue font-bold text-xl text-start">
-              Modul {index + 1}
-            </p>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Judul
-              </label>
-              <input
-                className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                placeholder="Masukan judul modul"
-                defaultValue={formData[index].title}
-                name="title"
-                onChange={(e) => handleInputChange(e, index)}
-              />
+    <AnimatePresence>
+      <motion.div initial={{ x: -100 }} animate={{ x: 0 }} exit={{ x: 100 }}>
+        <div className="w-full h-full">
+          <p className="py-5 text-costumeBlue font-bold text-2xl text-center">
+            Tambah Modul
+          </p>
+          <form className="w-full max-w-md xs:max-w-xs mx-auto relative">
+            {formData.map((_, index) => (
+              <AnimatePresence key={index}>
+                <motion.div
+                  initial={{ x: -100 }}
+                  animate={{ x: 0 }}
+                  exit={{ x: 100 }}
+                >
+                  <div className=" w-full shadow-md border-2 border-gray-300 p-5 rounded-lg m-3">
+                    <p className="py-5 text-costumeBlue font-bold text-xl text-start">
+                      Modul {index + 1}
+                    </p>
+                    <div className="mb-4">
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Judul
+                      </label>
+                      <input
+                        className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        placeholder="Masukan judul modul"
+                        defaultValue={formData[index].title}
+                        name="title"
+                        onChange={(e) => handleInputChange(e, index)}
+                      />
+                    </div>
+                    <AddVideoForm moduleIndex={index} />
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            ))}
+            <div className="flex justify-end gap-3">
+              <button
+                className="p-4 py-0 bg-costumeBlue text-white rounded-full text-2xl disabled:opacity-75"
+                onClick={handleDeleteModule}
+                disabled={formData.length <= 1 ? true : false}
+              >
+                -
+              </button>
+              <button
+                className="p-3 py-1 bg-costumeBlue text-white rounded-full text-2xl"
+                onClick={handleAddModule}
+              >
+                +
+              </button>
             </div>
-            <AddVideoForm moduleIndex={index} />
-          </div>
-        ))}
-        <div className="flex justify-end gap-3">
-          <button
-            className="p-4 py-0 bg-costumeBlue text-white rounded-full text-2xl disabled:opacity-75"
-            onClick={handleDeleteModule}
-            disabled={formData.length <= 1 ? true : false}
-          >
-            -
-          </button>
-          <button
-            className="p-3 py-1 bg-costumeBlue text-white rounded-full text-2xl"
-            onClick={handleAddModule}
-          >
-            +
-          </button>
+            <button
+              onClick={handleSaveCourse}
+              className="w-full bg-costumeBlue text-white mt-8 rounded-lg p-3"
+            >
+              Simpan
+            </button>
+          </form>
         </div>
-        <button
-          onClick={handleSaveCourse}
-          className="w-full bg-costumeBlue text-white mt-8 rounded-lg p-3"
-        >
-          Simpan
-        </button>
-      </form>
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
