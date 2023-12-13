@@ -1,6 +1,10 @@
 import AddVideoForm from "./AddVideoForm";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-import { addCourseFormState, addModuleFormState } from "../../atom/formAtom";
+import {
+  addCourseFormState,
+  addModuleFormState,
+  triggerDataUpdateState,
+} from "../../atom/formAtom";
 import axios from "axios";
 import { modalState } from "../../atom/modalAtom";
 
@@ -15,9 +19,13 @@ export default function AddModuleForm() {
   const resetModule = useResetRecoilState(addModuleFormState);
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
+    triggerDataUpdateState
+  );
 
   const handleAddModule = (e) => {
     e.preventDefault();
+    setTriggerDataUpdate(false);
     setFormData((prev) => [
       ...prev,
       {
@@ -119,7 +127,7 @@ export default function AddModuleForm() {
       });
       resetCourse();
       resetModule();
-
+      setTriggerDataUpdate(!triggerDataUpdate);
       setShowModal(false);
     } catch (err) {
       console.log(err);
@@ -130,7 +138,7 @@ export default function AddModuleForm() {
 
   return (
     <AnimatePresence>
-      <motion.div initial={{ x: -100 }} animate={{ x: 0 }} exit={{ x: 100 }}>
+      <motion.div initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: -300 }}>
         <div className="w-full h-full">
           <p className="py-5 text-costumeBlue font-bold text-2xl text-center">
             Tambah Modul
@@ -139,9 +147,9 @@ export default function AddModuleForm() {
             {formData.map((_, index) => (
               <AnimatePresence key={index}>
                 <motion.div
-                  initial={{ x: -100 }}
+                  initial={{ x: 100 }}
                   animate={{ x: 0 }}
-                  exit={{ x: 100 }}
+                  exit={{ x: -100 }}
                 >
                   <div className=" w-full shadow-md border-2 border-gray-300 p-5 rounded-lg m-3">
                     <p className="py-5 text-costumeBlue font-bold text-xl text-start">

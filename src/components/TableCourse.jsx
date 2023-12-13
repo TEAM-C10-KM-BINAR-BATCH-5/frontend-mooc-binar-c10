@@ -8,18 +8,22 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atom/modalAtom";
+import { triggerDataUpdateState } from "../atom/formAtom";
 
 export default function TableCourse() {
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [course, setCourse] = useState([]);
+  const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
+    triggerDataUpdateState
+  );
   useEffect(() => {
-    fetchCourses();
-  }, []);
+    const fetchCourses = async () => {
+      const coursesData = await getCourses();
+      setCourse(coursesData);
+    };
 
-  const fetchCourses = async () => {
-    const coursesData = await getCourses();
-    setCourse(coursesData);
-  };
+    fetchCourses();
+  }, [triggerDataUpdate]);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -42,8 +46,7 @@ export default function TableCourse() {
           })
           .then((response) => {
             console.log("Item berhasil dihapus:", response.data);
-            const updatedCourses = course.filter((course) => course.id !== id);
-            setCourse(updatedCourses);
+            setTriggerDataUpdate(!triggerDataUpdate);
             Swal.fire({
               title: "Deleted!",
               text: "Your file has been deleted.",

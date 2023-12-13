@@ -38,7 +38,7 @@ export default function AddCourseForm() {
 
   return (
     <AnimatePresence>
-      <motion.div initial={{ x: 100 }} animate={{ x: 0 }} exit={{ x: -100 }}>
+      <motion.div initial={{ x: -300 }} animate={{ x: 0 }} exit={{ x: 300 }}>
         <p className="py-5 text-costumeBlue font-bold text-2xl text-center">
           Tambah Kelas
         </p>
