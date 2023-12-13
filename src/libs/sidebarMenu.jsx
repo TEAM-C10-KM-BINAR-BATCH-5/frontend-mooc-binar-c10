@@ -1,4 +1,4 @@
-import { House, Book, SignOut } from "@phosphor-icons/react";
+import { House, Book } from "@phosphor-icons/react";
 
 export const SIDEBAR_LINKS = [
   {
@@ -13,10 +13,4 @@ export const SIDEBAR_LINKS = [
     path: "/kelas",
     icon: <Book size={24} color="#ffffff" weight="bold" />,
   },
-  // {
-  //   key: "keluar",
-  //   label: "Keluar",
-  //   path: "/out",
-  //   icon: <SignOut size={24} color="#ffffff" weight="bold" />,
-  // },
 ];
