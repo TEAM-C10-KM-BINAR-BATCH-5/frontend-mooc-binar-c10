@@ -1,5 +1,5 @@
 import logo from "../../assets/logo-learnhub-white.svg";
-import { SIDEBAR_LINKS } from "../../libs/Sidebar-menu";
+import { SIDEBAR_LINKS } from "../../libs/sidebarMenu";
 import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { useState } from "react";
