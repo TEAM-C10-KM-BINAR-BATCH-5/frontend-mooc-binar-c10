@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function EditModul() {
   return (
     <div className=" bg-white px-4 rounded-lg">

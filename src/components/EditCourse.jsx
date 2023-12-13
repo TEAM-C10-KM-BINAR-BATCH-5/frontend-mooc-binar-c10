@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getCoursesById } from "../libs/api"
 import { UploadSimple } from "@phosphor-icons/react/dist/ssr"
@@ -82,10 +82,10 @@ export default function EditCourse() {
 									</label>
 								</div>
 								<div className="grid grid-cols-1 md:grid-cols-2 mb-4 gap-6">
-									<label class="text-gray-700" for="name">
+									<label className="text-gray-700" htmlFor="name">
 										<p className="font-bold text-sm">About</p>
 										<textarea
-											class="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+											className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
 											id="comment"
 											value={courseData.about}
 											name="comment"
@@ -93,10 +93,10 @@ export default function EditCourse() {
 											cols="40"
 										></textarea>
 									</label>
-									<label class="text-gray-700" for="name">
+									<label className="text-gray-700" htmlFor="name">
 										<p className="font-bold text-sm">Objective</p>
 										<textarea
-											class="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+											className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
 											id="comment"
 											value={courseData.objective}
 											name="comment"
@@ -106,10 +106,10 @@ export default function EditCourse() {
 									</label>
 								</div>
 								<div className="grid grid-cols-1 md:grid-cols-2 mb-4 gap-6">
-									<label class="text-gray-700" for="name">
+									<label className="text-gray-700" htmlFor="name">
 										<p className="font-bold text-sm">Objective</p>
 										<textarea
-											class="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+											className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
 											id="comment"
 											value={courseData.onboarding}
 											name="comment"

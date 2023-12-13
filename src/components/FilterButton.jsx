@@ -1,6 +1,6 @@
 // FIlter Button ini masih percobaan, belum fixed
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Funnel } from "@phosphor-icons/react";
 
 const FilterButton = () => {
