@@ -33,3 +33,8 @@ export const addModuleFormState = atom({
     },
   ],
 });
+
+export const triggerDataUpdateState = atom({
+  key: "triggerDataUpdateState",
+  default: false,
+});
