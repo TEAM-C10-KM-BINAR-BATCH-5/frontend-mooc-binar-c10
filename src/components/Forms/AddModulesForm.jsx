@@ -63,7 +63,6 @@ export default function AddModuleForm() {
       };
       return updatedFormData;
     });
-    console.log(formData);
   };
 
   const handleSaveCourse = async (e) => {

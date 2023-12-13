@@ -2,14 +2,26 @@
 
 import { useState } from "react";
 import { Funnel } from "@phosphor-icons/react";
+import { useRecoilState } from "recoil";
+import { courseFilterState } from "../atom/courseAtom";
 
 const FilterButton = () => {
   const [showPopover, setShowPopover] = useState(false);
-  const [selectedClassType, setSelectedClassType] = useState("");
-  const [selectedClassLevel, setSelectedClassLevel] = useState("");
 
+  const [courseFilter, setCourseFilter] = useRecoilState(courseFilterState);
+
+  // toggle popover
   const togglePopover = () => {
     setShowPopover(!showPopover);
+  };
+
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setCourseFilter((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
@@ -32,20 +44,22 @@ const FilterButton = () => {
                 <label className="flex items-center gap-1">
                   <input
                     type="radio"
-                    name="classType"
+                    name="courseType"
                     value="Free"
-                    checked={selectedClassType === "Free"}
-                    onChange={(e) => setSelectedClassType(e.target.value)}
+                    checked={courseFilter.courseType == "Free" ? true : false}
+                    onChange={handleInputChange}
                   />
                   <span>Free</span>
                 </label>
                 <label className="flex items-center gap-1">
                   <input
                     type="radio"
-                    name="classType"
+                    name="courseType"
                     value="Premium"
-                    checked={selectedClassType === "Premium"}
-                    onChange={(e) => setSelectedClassType(e.target.value)}
+                    checked={
+                      courseFilter.courseType == "Premium" ? true : false
+                    }
+                    onChange={handleInputChange}
                   />
                   <span>Premium</span>
                 </label>
@@ -61,32 +75,34 @@ const FilterButton = () => {
                 <label className="flex items-center gap-1">
                   <input
                     type="radio"
-                    name="classLevel"
+                    name="level"
                     value="Beginner"
-                    checked={selectedClassLevel === "Beginner"}
-                    onChange={(e) => setSelectedClassLevel(e.target.value)}
+                    checked={courseFilter.level == "Beginner" ? true : false}
+                    onChange={handleInputChange}
                   />
                   <span>Beginner</span>
                 </label>
                 <label className="flex items-center gap-1">
                   <input
                     type="radio"
-                    name="classLevel"
+                    name="level"
                     value="Intermediate"
-                    checked={selectedClassLevel === "Intermediate"}
-                    onChange={(e) => setSelectedClassLevel(e.target.value)}
+                    checked={
+                      courseFilter.level == "Intermediate" ? true : false
+                    }
+                    onChange={handleInputChange}
                   />
                   <span>Intermediate</span>
                 </label>
                 <label className="flex items-center gap-1">
                   <input
                     type="radio"
-                    name="classLevel"
-                    value="Advanced"
-                    checked={selectedClassLevel === "Advanced"}
-                    onChange={(e) => setSelectedClassLevel(e.target.value)}
+                    name="level"
+                    value="Advance"
+                    checked={courseFilter.level == "Advance" ? true : false}
+                    onChange={handleInputChange}
                   />
-                  <span>Advanced</span>
+                  <span>Advance</span>
                 </label>
               </div>
             </form>
