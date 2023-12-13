@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getCategory } from "../../libs/Api-libs";
+import { getCategory } from "../../libs/api";
 import { useRecoilState } from "recoil";
 import { addCourseFormState } from "../../atom/formAtom";
 import { PencilSimpleLine, UploadSimple } from "@phosphor-icons/react";

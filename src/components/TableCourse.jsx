@@ -1,6 +1,6 @@
 import { MagnifyingGlass, PlusCircle } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
-import { getCourses } from "../libs/Api-libs";
+import { getCourses } from "../libs/api";
 import AddCourseModal from "./Modal/AddCourse";
 import { Link } from "react-router-dom";
 import FilterButton from "./FilterButton";
