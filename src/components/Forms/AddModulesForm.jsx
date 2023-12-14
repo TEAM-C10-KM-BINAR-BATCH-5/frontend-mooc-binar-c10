@@ -1,16 +1,15 @@
 import AddVideoForm from "./AddVideoForm"
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil"
 import { addCourseFormState, addModuleFormState } from "../../atom/formAtom"
-import axios from "axios"
 import { modalState } from "../../atom/modalAtom"
 
 import { loadingState } from "../../atom/loadingAtom"
 import { AnimatePresence, motion } from "framer-motion"
+import { createCourse, createModule, createVideo } from "../../libs/api"
 
 export default function AddModuleForm() {
 	const [formData, setFormData] = useRecoilState(addModuleFormState)
 	const courseData = useRecoilValue(addCourseFormState)
-	const token = localStorage.getItem("token")
 	const resetCourse = useResetRecoilState(addCourseFormState)
 	const resetModule = useResetRecoilState(addModuleFormState)
 	const [showModal, setShowModal] = useRecoilState(modalState)
@@ -62,59 +61,34 @@ export default function AddModuleForm() {
 		e.preventDefault()
 		try {
 			setIsLoading(true)
-			const response = await axios.post(
-				`${import.meta.env.VITE_API_BASE_URL}/course`,
-				{
-					title: courseData.name,
-					level: courseData.level,
-					telegramLink: courseData.telegramLink,
-					price: parseInt(courseData.price),
-					rating: courseData.rating,
-					about: courseData.about,
-					objective: courseData.objective,
-					categoryId: courseData.categoryId,
-					onboarding: courseData.onboarding,
-					instructor: courseData.instructor,
-					image: courseData.image,
-				},
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-						"Content-Type": "multipart/form-data",
-					},
-				}
-			)
-			const courseId = response.data.data.newCourse.id
+			const response = await createCourse({
+				title: courseData.name,
+				level: courseData.level,
+				telegramLink: courseData.telegramLink,
+				price: parseInt(courseData.price),
+				rating: courseData.rating,
+				about: courseData.about,
+				objective: courseData.objective,
+				categoryId: courseData.categoryId,
+				onboarding: courseData.onboarding,
+				instructor: courseData.instructor,
+				image: courseData.image,
+			})
+			const courseId = response.newCourse.id
 			formData.map(async (data) => {
-				const response = await axios.post(
-					`${import.meta.env.VITE_API_BASE_URL}/module`,
-					{
-						title: data.title,
-						courseId: courseId,
-					},
-					{
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					}
-				)
-				const moduleId = response.data.data.newModule.id
-				data.videos.map((video) => {
-					axios.post(
-						`${import.meta.env.VITE_API_BASE_URL}/video`,
-						{
-							no: video.videoNo,
-							title: video.videoTitle,
-							videoUrl: video.videoLink,
-							duration: video.videoDuration,
-							moduleId: moduleId,
-						},
-						{
-							headers: {
-								Authorization: `Bearer ${token}`,
-							},
-						}
-					)
+				const response = await createModule({
+					title: data.title,
+					courseId,
+				})
+				const moduleId = response.newModule.id
+				data.videos.map(async (video) => {
+					await createVideo({
+						no: video.videoNo,
+						title: video.videoTitle,
+						videoUrl: video.videoLink,
+						duration: video.videoDuration,
+						moduleId: moduleId,
+					})
 				})
 			})
 			resetCourse()
