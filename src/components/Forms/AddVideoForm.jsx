@@ -55,7 +55,7 @@ export default function AddVideoForm({ moduleIndex }) {
 
   return (
     <div className="w-full">
-      <form className="w-full max-w-md xs:max-w-xs mx-auto relative">
+      <div className="w-full max-w-md xs:max-w-xs mx-auto relative">
         {formData[moduleIndex].videos.map((_, index) => (
           <div key={index}>
             <p className="py-5 text-costumeBlue font-bold text-lg text-start">
@@ -115,7 +115,7 @@ export default function AddVideoForm({ moduleIndex }) {
             + Tambah Video
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

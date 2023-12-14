@@ -28,18 +28,6 @@ export const getCoursesById = async (id) => {
   }
 };
 
-// export const DeleteCourse = async (id) => {
-//   try {
-//     const response = await axios.delete(
-//       `${import.meta.env.VITE_API_BASE_URL}/course/${id}`
-//     );
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error Deleting course:", error.message);
-//     throw error; // Kembalikan error agar bisa ditangani di komponen yang menggunakan fungsi ini
-//   }
-// };
-
 export const getCategory = async () => {
   try {
     const response = await axios.get(

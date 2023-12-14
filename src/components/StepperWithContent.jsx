@@ -20,6 +20,7 @@ export function StepperWithContent({ addCourse, addModule }) {
       >
         <Step
           activeClassName="bg-costumeBlue"
+          className="cursor-pointer hover:brightness-75"
           completedClassName="bg-costumeBlue"
           onClick={() => setActiveStep(0)}
         >
@@ -27,6 +28,7 @@ export function StepperWithContent({ addCourse, addModule }) {
         </Step>
         <Step
           activeClassName="bg-costumeBlue"
+          className="cursor-pointer hover:brightness-75"
           completedClassName="bg-costumeBlue"
           onClick={() => setActiveStep(1)}
         >

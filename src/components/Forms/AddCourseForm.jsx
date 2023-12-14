@@ -68,11 +68,7 @@ export default function AddCourseForm() {
             >
               <option value="">Pilih kategori</option>
               {categories.map((category) => (
-                <option
-                  key={category.id}
-                  value={category.id}
-                  selected={formData.categoryId == category.id ? true : false}
-                >
+                <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}
@@ -154,24 +150,9 @@ export default function AddCourseForm() {
               name="level"
             >
               <option value="">Pilih level</option>
-              <option
-                value="Beginner"
-                selected={formData.level == "Beginner" ? true : false}
-              >
-                Beginner
-              </option>
-              <option
-                value="Intermediate"
-                selected={formData.level == "Intermediate" ? true : false}
-              >
-                Intermediate
-              </option>
-              <option
-                value="Advance"
-                selected={formData.level == "Advance" ? true : false}
-              >
-                Advance
-              </option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advance">Advance</option>
             </select>
           </div>
           <div className="mb-4">
