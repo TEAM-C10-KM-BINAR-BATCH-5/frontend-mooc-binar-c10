@@ -9,6 +9,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atom/modalAtom";
 import { triggerDataUpdateState } from "../atom/formAtom";
+import { courseFilterState } from "../atom/courseAtom";
 
 export default function TableCourse() {
   const [showModal, setShowModal] = useRecoilState(modalState);
@@ -16,55 +17,55 @@ export default function TableCourse() {
   const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
     triggerDataUpdateState
   );
+  const [courseFilter] = useRecoilState(courseFilterState);
+
   useEffect(() => {
     const fetchCourses = async () => {
-      const coursesData = await getCourses();
+      const coursesData = await getCourses(courseFilter);
       setCourse(coursesData);
     };
-
     fetchCourses();
-  }, [triggerDataUpdate]);
+  }, [triggerDataUpdate, courseFilter]);
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+  const handleDelete = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
       if (result.isConfirmed) {
         const token = localStorage.getItem("token"); // Ambil token dari localStorage
 
-        axios
-          .delete(`${import.meta.env.VITE_API_BASE_URL}/course/${id}`, {
+        const response = await axios.delete(
+          `${import.meta.env.VITE_API_BASE_URL}/course/${id}`,
+          {
             headers: {
               Authorization: `Bearer ${token}`, // Sertakan token dalam header Authorization
             },
-          })
-          .then((response) => {
-            console.log("Item berhasil dihapus:", response.data);
-            setTriggerDataUpdate(!triggerDataUpdate);
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
-            // Tambahkan logika atau perbarui state setelah penghapusan berhasil
-          })
-          .catch((error) => {
-            console.error("Gagal menghapus item:", error);
-            Swal.fire({
-              title: "Failed!",
-              text: "Failed to delete your file.",
-              icon: "error",
-            });
-            // Tambahkan penanganan kesalahan jika penghapusan gagal
-          });
+          }
+        );
+        console.log("Item berhasil dihapus:", response.data);
+        setTriggerDataUpdate(!triggerDataUpdate);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
       }
-    });
+    } catch (error) {
+      console.error("Gagal menghapus item:", error);
+      Swal.fire({
+        title: "Failed!",
+        text: "Failed to delete your file.",
+        icon: "error",
+      });
+      // Tambahkan penanganan kesalahan jika penghapusan gagal
+    }
   };
 
   return (
