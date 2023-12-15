@@ -1,4 +1,3 @@
-import { MagnifyingGlass } from "@phosphor-icons/react";
 const Navbar = () => {
   return (
     <nav className="bg-lightBlue shadow">

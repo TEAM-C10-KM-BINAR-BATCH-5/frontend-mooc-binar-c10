@@ -1,5 +1,10 @@
 import AddVideoForm from "./AddVideoForm";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
 import {
   addCourseFormState,
   addModuleFormState,
@@ -16,8 +21,8 @@ export default function AddModuleForm() {
   const courseData = useRecoilValue(addCourseFormState);
   const resetCourse = useResetRecoilState(addCourseFormState);
   const resetModule = useResetRecoilState(addModuleFormState);
-  const [showModal, setShowModal] = useRecoilState(modalState);
-  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  const setShowModal = useSetRecoilState(modalState);
+  const setIsLoading = useSetRecoilState(loadingState);
   const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
     triggerDataUpdateState
   );

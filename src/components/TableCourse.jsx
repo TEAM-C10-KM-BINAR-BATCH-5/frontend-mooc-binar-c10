@@ -5,12 +5,11 @@ import {
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { getCategory, getCourses } from "../libs/api";
-import AddCourseModal from "./Modal/AddCourse";
 import { Link } from "react-router-dom";
 import FilterButton from "./FilterButton";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { modalState } from "../atom/modalAtom";
 import { triggerDataUpdateState } from "../atom/formAtom";
 import { courseFilterState } from "../atom/courseAtom";
@@ -18,9 +17,11 @@ import { Button, MenuItem } from "@material-tailwind/react";
 import FilterMenu from "./FilterMenu";
 import { filterVisibleState } from "../atom/filterAtom";
 import { AnimatePresence, motion } from "framer-motion";
+import Modal from "./Modal/Modal";
+import AddCourse from "./ModalContent/AddCourse";
 
 export default function TableCourse() {
-  const [showModal, setShowModal] = useRecoilState(modalState);
+  const setShowModal = useSetRecoilState(modalState);
   const [course, setCourse] = useState([]);
   const [category, setCategory] = useState([]);
   const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
@@ -80,8 +81,8 @@ export default function TableCourse() {
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "rgba(97, 72, 255, 1)",
         confirmButtonText: "Yes, delete it!",
       });
       if (result.isConfirmed) {
@@ -123,7 +124,9 @@ export default function TableCourse() {
           </div>
           <div className="flex flex-cols gap-2">
             <button
-              onClick={() => setShowModal(true)}
+              onClick={() =>
+                setShowModal({ visible: true, content: "addCourse" })
+              }
               type="button"
               className="bg-costumeBlue border border-costumeBlue border-solid rounded-xl flex items-center px-3 p-1"
             >
@@ -308,10 +311,9 @@ export default function TableCourse() {
           </table>
         </div>
       </div>
-      <AddCourseModal
-        isVisible={showModal}
-        onClose={() => setShowModal(false)}
-      />
+      <Modal>
+        <AddCourse />
+      </Modal>
     </>
   );
 }

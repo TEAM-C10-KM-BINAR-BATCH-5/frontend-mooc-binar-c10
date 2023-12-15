@@ -3,14 +3,18 @@ import { SIDEBAR_LINKS } from "../../libs/sidebarMenu.jsx";
 import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { useState } from "react";
-import Logout from "../Modal/Logout";
+
 import { SignOut } from "@phosphor-icons/react";
+import Modal from "../Modal/Modal.jsx";
+import Logout from "../ModalContent/Logout.jsx";
+import { modalState } from "../../atom/modalAtom.js";
+import { useSetRecoilState } from "recoil";
 
 const linkClass =
   "flex items-center gap-2 font-bold text-md px-3 py-2 hover:bg-blue-400 hover:no-underline active:bg-indigo-600 rounded-lg text-base";
 
 export default function Sidebar() {
-  const [showModal, setShowModal] = useState(false);
+  const setShowModal = useSetRecoilState(modalState);
 
   const { pathname } = useLocation();
 
@@ -36,7 +40,7 @@ export default function Sidebar() {
       </div>
       <div className="py-2 p-5 mr-0 sm:mr-9">
         <button
-          onClick={() => setShowModal(true)}
+          onClick={() => setShowModal({ visible: true, content: "logout" })}
           type="button"
           className="flex items-center gap-2 text-white hover:bg-blue-400 hover:no-underline active:bg-indigo-600 rounded-lg text-base px-3 py-2 font-bold"
         >
@@ -46,7 +50,6 @@ export default function Sidebar() {
           <h2 className="hidden sm:block">keluar</h2>
         </button>
       </div>
-      <Logout isVisible={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 }
