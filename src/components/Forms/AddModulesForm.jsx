@@ -66,7 +66,7 @@ export default function AddModuleForm() {
       };
       return updatedFormData;
     });
-    console.log(formData);
+    console.log(courseData.name);
   };
 
   const handleSaveCourse = async (e) => {
@@ -74,7 +74,7 @@ export default function AddModuleForm() {
     try {
       setIsLoading(true);
       const response = await createCourse({
-        title: courseData.name,
+        name: courseData.name,
         level: courseData.level,
         telegramLink: courseData.telegramLink,
         price: parseInt(courseData.price),
@@ -88,6 +88,7 @@ export default function AddModuleForm() {
       });
       const courseId = response.newCourse.id;
       formData.map(async (data) => {
+        console.log(data);
         const response = await createModule({
           title: data.title,
           courseId,
@@ -97,7 +98,7 @@ export default function AddModuleForm() {
           await createVideo({
             no: video.videoNo,
             title: video.videoTitle,
-            videoUrl: video.videoLink,
+            videoUrl: video.videoNo,
             duration: video.videoDuration,
             moduleId: moduleId,
           });
@@ -105,11 +106,10 @@ export default function AddModuleForm() {
       });
       resetCourse();
       resetModule();
-
       setTriggerDataUpdate(!triggerDataUpdate);
       setShowModal(false);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     } finally {
       setIsLoading(false);
     }

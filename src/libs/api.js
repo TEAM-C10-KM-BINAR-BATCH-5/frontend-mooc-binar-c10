@@ -50,7 +50,7 @@ export const getCategory = async () => {
 
 export const createModule = async (data) => {
   try {
-    const response = axios.post(
+    const response = await axios.post(
       `${import.meta.env.VITE_API_BASE_URL}/module`,
       {
         title: data.title,
@@ -62,6 +62,7 @@ export const createModule = async (data) => {
         },
       }
     );
+
     return response.data.data;
   } catch (error) {
     return error.response.data;
@@ -73,10 +74,10 @@ export const createVideo = async (data) => {
     const response = await axios.post(
       `${import.meta.env.VITE_API_BASE_URL}/video`,
       {
-        no: data.videoNo,
-        title: data.videoTitle,
-        videoUrl: data.videoLink,
-        duration: data.videoDuration,
+        no: data.no,
+        title: data.title,
+        videoUrl: data.videoUrl,
+        duration: data.duration,
         moduleId: data.moduleId,
       },
       {
@@ -87,7 +88,8 @@ export const createVideo = async (data) => {
     );
     return response.data.data;
   } catch (error) {
-    return error.response.data;
+    console.log(error);
+    return error;
   }
 };
 
