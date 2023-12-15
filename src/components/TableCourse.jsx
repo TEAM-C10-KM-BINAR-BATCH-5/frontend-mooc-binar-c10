@@ -196,17 +196,18 @@ export default function TableCourse() {
                 </FilterMenu>
 
                 <FilterMenu title={"level"}>
-                  <MenuItem className="flex flex-row items-center gap-2">
+                  <MenuItem className="flex flex-row items-center gap-2 cursor-default">
                     <input
                       type="radio"
                       name="level"
                       value="Beginner"
                       checked={courseFilter.level == "Beginner" ? true : false}
                       onChange={handleInputChange}
+                      className="cursor-pointer"
                     />
                     <span>Beginner</span>
                   </MenuItem>
-                  <MenuItem className="flex flex-row items-center gap-2">
+                  <MenuItem className="flex flex-row items-center gap-2 cursor-default">
                     <input
                       type="radio"
                       name="level"
@@ -215,16 +216,18 @@ export default function TableCourse() {
                         courseFilter.level == "Intermediate" ? true : false
                       }
                       onChange={handleInputChange}
+                      className="cursor-pointer"
                     />
                     <span>Intermediate</span>
                   </MenuItem>
-                  <MenuItem className="flex flex-row items-center gap-2">
+                  <MenuItem className="flex flex-row items-center gap-2 cursor-default">
                     <input
                       type="radio"
                       name="level"
                       value="Advance"
                       checked={courseFilter.level == "Advance" ? true : false}
                       onChange={handleInputChange}
+                      className="cursor-pointer"
                     />
                     <span>Advance</span>
                   </MenuItem>
@@ -234,7 +237,7 @@ export default function TableCourse() {
                   {" "}
                   {category.map((category) => (
                     <MenuItem
-                      className="flex flex-row items-center gap-2"
+                      className="flex flex-row items-center gap-2 cursor-default"
                       key={category.id}
                     >
                       <input
@@ -243,6 +246,7 @@ export default function TableCourse() {
                         value={category.id}
                         onClick={handleInputChange}
                         checked={courseFilter.categoryIds.includes(category.id)}
+                        className="cursor-pointer"
                       />
                       <span>{category.name}</span>
                     </MenuItem>
