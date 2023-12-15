@@ -17,6 +17,7 @@ import { courseFilterState } from "../atom/courseAtom";
 import { Button, MenuItem } from "@material-tailwind/react";
 import FilterMenu from "./FilterMenu";
 import { filterVisibleState } from "../atom/filterAtom";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function TableCourse() {
   const [showModal, setShowModal] = useRecoilState(modalState);
@@ -31,11 +32,29 @@ export default function TableCourse() {
 
   const handleInputChange = (e) => {
     e.preventDefault();
-    const { name, value } = e.target;
-    setCourseFilter((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const { name, value, checked } = e.target;
+    if (name === "categoryIds") {
+      // Handle checkboxes for categories
+      if (checked) {
+        // If checkbox is checked, add the category ID to the array
+        setCourseFilter((prev) => ({
+          ...prev,
+          [name]: [...prev[name], value],
+        }));
+      } else {
+        // If checkbox is unchecked, remove the category ID from the array
+        setCourseFilter((prev) => ({
+          ...prev,
+          [name]: prev[name].filter((id) => id !== value),
+        }));
+      }
+    } else {
+      // Handle other input changes
+      setCourseFilter((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   useEffect(() => {
@@ -127,89 +146,109 @@ export default function TableCourse() {
             </button>
           </div>
         </div>
-        {filterVisible && (
-          <div className="flex flex-row-reverse justify-start items-center gap-3 m-3 ">
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                resetCourseFilter();
-              }}
-              className="bg-transparent border-2 border-costumeBlue text-costumeBlue opacity-50 rounded-lg p-2"
+        <AnimatePresence>
+          {filterVisible && (
+            <motion.div
+              initial={{ y: -10 }}
+              animate={{ y: 0 }}
+              exit={{ opacity: 0 }}
             >
-              <ArrowsClockwise size={15} weight="bold" />
-            </Button>
-            <FilterMenu title={"kelas"}>
-              <MenuItem className="flex flex-row items-center gap-2">
-                {" "}
-                <input
-                  type="radio"
-                  name="courseType"
-                  value="Free"
-                  checked={courseFilter.courseType == "Free" ? true : false}
-                  onChange={handleInputChange}
-                />
-                <span>Free</span>
-              </MenuItem>
-              <MenuItem className="flex flex-row items-center gap-2">
-                {" "}
-                <input
-                  type="radio"
-                  name="courseType"
-                  value="Premium"
-                  checked={courseFilter.courseType == "Premium" ? true : false}
-                  onChange={handleInputChange}
-                />
-                <span>Premium</span>
-              </MenuItem>
-            </FilterMenu>
-
-            <FilterMenu title={"level"}>
-              <MenuItem className="flex flex-row items-center gap-2">
-                <input
-                  type="radio"
-                  name="level"
-                  value="Beginner"
-                  checked={courseFilter.level == "Beginner" ? true : false}
-                  onChange={handleInputChange}
-                />
-                <span>Beginner</span>
-              </MenuItem>
-              <MenuItem className="flex flex-row items-center gap-2">
-                <input
-                  type="radio"
-                  name="level"
-                  value="Intermediate"
-                  checked={courseFilter.level == "Intermediate" ? true : false}
-                  onChange={handleInputChange}
-                />
-                <span>Intermediate</span>
-              </MenuItem>
-              <MenuItem className="flex flex-row items-center gap-2">
-                <input
-                  type="radio"
-                  name="level"
-                  value="Advance"
-                  checked={courseFilter.level == "Advance" ? true : false}
-                  onChange={handleInputChange}
-                />
-                <span>Advance</span>
-              </MenuItem>
-            </FilterMenu>
-
-            <FilterMenu title={"kategori"}>
-              {" "}
-              {category.map((category) => (
-                <MenuItem
-                  className="flex flex-row items-center gap-2"
-                  key={category.id}
+              <div className="flex flex-row-reverse justify-start items-center gap-3 m-3 ">
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    resetCourseFilter();
+                  }}
+                  className="bg-transparent border-2 border-costumeBlue text-costumeBlue opacity-50 rounded-lg p-2"
                 >
-                  <input type="checkbox" name="courseType" value="Free" />
-                  <span>{category.name}</span>
-                </MenuItem>
-              ))}
-            </FilterMenu>
-          </div>
-        )}
+                  <ArrowsClockwise size={15} weight="bold" />
+                </Button>
+                <FilterMenu title={"kelas"}>
+                  <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                    {" "}
+                    <input
+                      type="radio"
+                      name="courseType"
+                      value="Free"
+                      checked={courseFilter.courseType == "Free" ? true : false}
+                      className="cursor-pointer"
+                      onChange={handleInputChange}
+                    />
+                    <span>Free</span>
+                  </MenuItem>
+                  <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                    {" "}
+                    <input
+                      type="radio"
+                      name="courseType"
+                      value="Premium"
+                      checked={
+                        courseFilter.courseType == "Premium" ? true : false
+                      }
+                      onChange={handleInputChange}
+                      className="cursor-pointer"
+                    />
+                    <span>Premium</span>
+                  </MenuItem>
+                </FilterMenu>
+
+                <FilterMenu title={"level"}>
+                  <MenuItem className="flex flex-row items-center gap-2">
+                    <input
+                      type="radio"
+                      name="level"
+                      value="Beginner"
+                      checked={courseFilter.level == "Beginner" ? true : false}
+                      onChange={handleInputChange}
+                    />
+                    <span>Beginner</span>
+                  </MenuItem>
+                  <MenuItem className="flex flex-row items-center gap-2">
+                    <input
+                      type="radio"
+                      name="level"
+                      value="Intermediate"
+                      checked={
+                        courseFilter.level == "Intermediate" ? true : false
+                      }
+                      onChange={handleInputChange}
+                    />
+                    <span>Intermediate</span>
+                  </MenuItem>
+                  <MenuItem className="flex flex-row items-center gap-2">
+                    <input
+                      type="radio"
+                      name="level"
+                      value="Advance"
+                      checked={courseFilter.level == "Advance" ? true : false}
+                      onChange={handleInputChange}
+                    />
+                    <span>Advance</span>
+                  </MenuItem>
+                </FilterMenu>
+
+                <FilterMenu title={"kategori"}>
+                  {" "}
+                  {category.map((category) => (
+                    <MenuItem
+                      className="flex flex-row items-center gap-2"
+                      key={category.id}
+                    >
+                      <input
+                        type="checkbox"
+                        name="categoryIds"
+                        value={category.id}
+                        onClick={handleInputChange}
+                        checked={courseFilter.categoryIds.includes(category.id)}
+                      />
+                      <span>{category.name}</span>
+                    </MenuItem>
+                  ))}
+                </FilterMenu>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="mt-3 overflow-x-auto">
           <table className="w-full border border-separate">

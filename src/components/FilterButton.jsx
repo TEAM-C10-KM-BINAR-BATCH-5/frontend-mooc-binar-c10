@@ -10,11 +10,15 @@ const FilterButton = () => {
     <div className="relative inline-block">
       <button
         type="button"
-        className="border border-costumeBlue border-solid rounded-xl flex items-center px-2 p-0.5"
+        className={
+          filterVisible
+            ? "border border-costumeBlue  bg- bg-costumeBlue border-solid rounded-xl flex items-center px-2 p-1 text-white"
+            : "border border-costumeBlue border-solid rounded-xl flex items-center px-2 p-1 text-costumeBlue"
+        }
         onClick={() => setFilterVisible(!filterVisible)}
       >
-        <Funnel size={24} weight="bold" className="mr-2 text-costumeBlue" />
-        <span className="font-bold text-costumeBlue">Filter</span>
+        <Funnel size={24} weight="bold" className="mr-2" />
+        <span className="font-bold">Filter</span>
       </button>
     </div>
   );
