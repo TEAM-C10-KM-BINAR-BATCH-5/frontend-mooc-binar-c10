@@ -19,7 +19,7 @@ import { filterVisibleState } from "../atom/filterAtom";
 import { AnimatePresence, motion } from "framer-motion";
 import Modal from "./Modal/Modal";
 import AddCourse from "./ModalContent/AddCourse";
-
+import Pagination from "./Pagination";
 export default function TableCourse() {
   const setShowModal = useSetRecoilState(modalState);
   const [course, setCourse] = useState([]);
@@ -114,6 +114,18 @@ export default function TableCourse() {
       // Tambahkan penanganan kesalahan jika penghapusan gagal
     }
   };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = course.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const priceFormatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  });
 
   return (
     <>
@@ -282,7 +294,7 @@ export default function TableCourse() {
               </tr>
             </thead>
             <tbody>
-              {course.map((item) => (
+              {currentItems.map((item) => (
                 <tr key={item.id}>
                   <td className="p-3 text-sm text-gray-700 ">
                     {item.Category.name}
@@ -292,7 +304,9 @@ export default function TableCourse() {
                     {item.courseType}
                   </td>
                   <td className="p-3 text-sm text-gray-700 ">{item.level}</td>
-                  <td className="p-3 text-sm text-gray-700 ">{item.price}</td>
+                  <td className="p-3 text-sm text-gray-700 ">
+                    {priceFormatter.format(item.price)}
+                  </td>
                   <td>
                     <div className="flex gap-2 items-center justify-center">
                       <Link
@@ -313,6 +327,17 @@ export default function TableCourse() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="flex justify-center mt-4">
+          {course.length > itemsPerPage && (
+            <Pagination
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+              totalItems={course.length}
+              paginate={paginate}
+            />
+          )}
         </div>
       </div>
       <Modal>

@@ -24,7 +24,7 @@ export default function Login() {
       localStorage.setItem("token", response.data.token);
       navigate("/");
     } catch (error) {
-      setError(error.response.data.message);
+      setError("email atau password salah");
       return [];
     }
   };
@@ -68,9 +68,9 @@ export default function Login() {
               </label>
               <a
                 className="inline-block align-baseline font-bold text-sm text-costumeBlue"
-                href="#"
+                href="/asasa"
               >
-                Lupa kada sandi?
+                Lupa kata sandi?
               </a>
             </div>
             <div className="relative">
