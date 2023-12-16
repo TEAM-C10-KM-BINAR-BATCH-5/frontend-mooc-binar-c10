@@ -151,7 +151,7 @@ export default function AddModuleForm() {
                         onChange={(e) => handleInputChange(e, index)}
                       />
                     </div>
-                    {courseData.price != 0 && (
+                    {parseInt(courseData.price) > 0 && (
                       <select
                         className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         value={formData[index].isLocked}
