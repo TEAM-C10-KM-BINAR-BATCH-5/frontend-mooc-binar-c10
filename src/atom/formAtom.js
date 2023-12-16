@@ -8,7 +8,6 @@ export const addCourseFormState = atom({
     instructor: "",
     level: "",
     price: 0,
-    rating: 5,
     telegramLink: "",
     about: "",
     objective: "",
@@ -24,10 +23,10 @@ export const addModuleFormState = atom({
       title: "",
       videos: [
         {
-          videoNo: 0,
+          videoNo: 1,
           videoTitle: "",
           videoLink: "",
-          videoDuration: 0,
+          videoDuration: "0",
         },
       ],
     },

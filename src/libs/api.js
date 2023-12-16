@@ -54,6 +54,7 @@ export const createModule = async (data) => {
       `${import.meta.env.VITE_API_BASE_URL}/module`,
       {
         title: data.title,
+        isLocked: data.isLocked,
         courseId: data.courseId,
       },
       {

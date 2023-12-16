@@ -15,6 +15,7 @@ import { modalState } from "../../atom/modalAtom";
 import { loadingState } from "../../atom/loadingAtom";
 import { AnimatePresence, motion } from "framer-motion";
 import { createCourse, createModule, createVideo } from "../../libs/api";
+import { isFormEmpty } from "../../../utils/formCheck";
 
 export default function AddModuleForm() {
   const [formData, setFormData] = useRecoilState(addModuleFormState);
@@ -26,6 +27,9 @@ export default function AddModuleForm() {
   const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
     triggerDataUpdateState
   );
+  const isCourseEmpty = isFormEmpty(courseData);
+  const isModuleEmpty = isFormEmpty(formData);
+  const isVideoEmpty = formData.some((data) => isFormEmpty(data.videos));
 
   const handleAddModule = (e) => {
     e.preventDefault();
@@ -66,7 +70,6 @@ export default function AddModuleForm() {
       };
       return updatedFormData;
     });
-    console.log(courseData.name);
   };
 
   const handleSaveCourse = async (e) => {
@@ -88,9 +91,10 @@ export default function AddModuleForm() {
       });
       const courseId = response.newCourse.id;
       formData.map(async (data) => {
-        console.log(data);
+        const isLocked = data.isLocked != undefined ? data.isLocked : "false";
         const response = await createModule({
           title: data.title,
+          isLocked: JSON.parse(isLocked),
           courseId,
         });
         const moduleId = response.newModule.id;
@@ -147,6 +151,18 @@ export default function AddModuleForm() {
                         onChange={(e) => handleInputChange(e, index)}
                       />
                     </div>
+                    {courseData.price != 0 && (
+                      <select
+                        className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={formData[index].isLocked}
+                        name="isLocked"
+                        onChange={(e) => handleInputChange(e, index)}
+                      >
+                        <option value="">Pilih status modul</option>
+                        <option value="true">Terkunci</option>
+                        <option value="false">Tidak Terkunci</option>
+                      </select>
+                    )}
                     <AddVideoForm moduleIndex={index} />
                   </div>
                 </motion.div>
@@ -170,7 +186,8 @@ export default function AddModuleForm() {
             </div>
             <button
               onClick={handleSaveCourse}
-              className="w-full bg-costumeBlue text-white mt-8 rounded-lg p-3"
+              className="w-full bg-costumeBlue text-white mt-8 rounded-lg p-3 disabled:opacity-50"
+              disabled={isCourseEmpty || isModuleEmpty || isVideoEmpty}
             >
               Simpan
             </button>
