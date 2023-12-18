@@ -12,13 +12,13 @@ const FilterButton = () => {
         type="button"
         className={
           filterVisible
-            ? "border border-costumeBlue  bg- bg-costumeBlue border-solid rounded-xl flex items-center px-2 p-1 text-white"
-            : "border border-costumeBlue border-solid rounded-xl flex items-center px-2 p-1 text-costumeBlue"
+            ? "border border-costumeBlue  bg- bg-costumeBlue border-solid rounded-xl flex justify-center items-center px-2 p-1 text-white gap-2"
+            : "border border-costumeBlue border-solid rounded-xl flex justify-center items-center px-2 p-1 text-costumeBlue gap-2"
         }
         onClick={() => setFilterVisible(!filterVisible)}
       >
-        <Funnel size={24} weight="bold" className="mr-2" />
-        <span className="font-bold">Filter</span>
+        <Funnel size={24} weight="bold" />
+        <span className="font-bold hidden md:block">Filter</span>
       </button>
     </div>
   );

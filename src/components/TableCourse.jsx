@@ -130,25 +130,22 @@ export default function TableCourse() {
   return (
     <>
       <div className="px-4 pt-3 pb-4 rounded-sm flex-1 whitespace-nowrap">
-        <div className="flex md:flex-row flex-col justify-between gap-2">
-          <div className="text-sm sm:text-xl">
+        <div className="flex  flex-row justify-between gap-2">
+          <div className="text-base sm:text-xl">
             <strong>Kelola Course</strong>
           </div>
-          <div className="flex flex-cols gap-2">
+          <div className="flex flex-row justify-end gap-2">
             <button
               onClick={() =>
                 setShowModal({ visible: true, content: "addCourse" })
               }
               type="button"
-              className="bg-costumeBlue border border-costumeBlue border-solid rounded-xl flex items-center px-3 p-1"
+              className="bg-costumeBlue border border-costumeBlue border-solid rounded-xl flex  items-center gap-2 px-3 p-1"
             >
-              <PlusCircle
-                size={24}
-                color="#ffffff"
-                className="mr-2"
-                weight="bold"
-              />
-              <span className="font-bold text-white">Tambah</span>
+              <PlusCircle size={24} color="#ffffff" weight="bold" />
+              <span className="font-bold text-white hidden md:block">
+                Tambah
+              </span>
             </button>
 
             <FilterButton />
