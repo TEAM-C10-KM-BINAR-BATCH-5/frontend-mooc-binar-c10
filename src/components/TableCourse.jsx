@@ -20,7 +20,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Modal from "./Modal/Modal";
 import AddCourse from "./ModalContent/AddCourse";
 import Pagination from "./Pagination";
-import { priceFormatter } from "../utils/PriceFormater";
+import { priceFormatter } from "../../utils/PriceFormater";
 
 export default function TableCourse() {
   const setShowModal = useSetRecoilState(modalState);

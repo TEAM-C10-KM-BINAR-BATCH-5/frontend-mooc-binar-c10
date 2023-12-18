@@ -3,7 +3,7 @@ import { Funnel } from "@phosphor-icons/react/dist/ssr";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import Pagination from "./Pagination";
 import { getDataTransaction } from "../libs/api";
-import { formatDate } from "../utils/TimeFormater";
+import { formatDate } from "../../utils/TimeFormater";
 
 function Table() {
   const [transaction, setTransaction] = useState([]);
