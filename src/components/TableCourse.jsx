@@ -20,6 +20,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import Modal from "./Modal/Modal";
 import AddCourse from "./ModalContent/AddCourse";
 import Pagination from "./Pagination";
+import { priceFormatter } from "../utils/PriceFormater";
+
 export default function TableCourse() {
   const setShowModal = useSetRecoilState(modalState);
   const [course, setCourse] = useState([]);
@@ -111,9 +113,10 @@ export default function TableCourse() {
         text: "Failed to delete your file.",
         icon: "error",
       });
-      // Tambahkan penanganan kesalahan jika penghapusan gagal
     }
   };
+
+  //pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
 
@@ -121,11 +124,6 @@ export default function TableCourse() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = course.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const priceFormatter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-  });
 
   return (
     <>

@@ -19,7 +19,7 @@ export default function EditCourse() {
     };
 
     fetchCourseData();
-  }, [id]);
+  }, [id]); 
 
   const [image, setImage] = useState(""); // State untuk menyimpan foto yang diunggah
 
