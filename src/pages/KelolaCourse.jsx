@@ -11,7 +11,7 @@ export default function KelolaCourse() {
   };
   return (
     <>
-      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1  gap-4">
         <div
           className="flex flex-row gap-2 items-center rounded-full hover:bg-gray-200 w-fit cursor-pointer p-3 font-bold"
           onClick={goBack}
