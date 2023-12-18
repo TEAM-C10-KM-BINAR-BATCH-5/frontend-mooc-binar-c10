@@ -119,7 +119,7 @@ export default function AddCourseForm() {
             </label>
             <input
               className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
+              type="url"
               placeholder="Masukan link telegram kelas"
               name="telegramLink"
               onChange={handleInputChange}

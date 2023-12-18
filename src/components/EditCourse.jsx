@@ -34,7 +34,7 @@ export default function EditCourse() {
         <div className="bg-white shadow rounded-lg">
           <p className="text-xl font-bold py-5 text-center">Detail Course</p>
           {courseData ? (
-            <div className="px-8 py-2">
+            <div className="p-5 shadow-xl rounded-lg">
               <form action="">
                 <div className="grid grid-cols-1 md:grid-cols-2 mb-2 gap-6">
                   <label className="block text-gray-700 mb-2">
@@ -107,7 +107,7 @@ export default function EditCourse() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 mb-4 gap-6">
                   <label className="text-gray-700" htmlFor="name">
-                    <p className="font-bold text-sm">Objective</p>
+                    <p className="font-bold text-sm">Onboarding</p>
                     <textarea
                       className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       id="comment"

@@ -21,7 +21,6 @@ const checkArray = (data) => {
 };
 
 export const isFormEmpty = (data) => {
-  console.log(data);
   if (Array.isArray(data)) {
     return checkArray(data);
   } else {

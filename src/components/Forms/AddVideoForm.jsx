@@ -12,7 +12,7 @@ export default function AddVideoForm({ moduleIndex }) {
         ...updatedFormData[moduleIndex],
         videos: [
           ...updatedFormData[moduleIndex].videos,
-          { videoNo: 0, videoTitle: "", videoLink: "", videoDuration: 0 },
+          { videoNo: 0, videoTitle: "", videoLink: "", videoDuration: "0" },
         ],
       };
       return updatedFormData;
