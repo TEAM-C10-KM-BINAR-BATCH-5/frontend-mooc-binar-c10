@@ -32,7 +32,9 @@ export default function EditCourse() {
     <>
       <div className="items-center justify-center">
         <div className="bg-white shadow rounded-lg">
-          <p className="text-xl font-bold py-5 text-center">Detail Course</p>
+          <p className="text-xl lg:text-2xl font-bold text-center text-costumeBlue">
+            Detail Course
+          </p>
           {courseData ? (
             <div className="p-5 shadow-xl rounded-lg">
               <form action="">
@@ -141,14 +143,16 @@ export default function EditCourse() {
                   </div>
                 </div>
               </form>
-              <button
-                type="button"
-                name="image"
-                className="bg-costumeBlue w-full flex items-center justify-center gap-1 rounded-lg py-2 p-3"
-              >
-                <FloppyDisk size={24} color="#FFFFFF" weight="bold" />
-                <p className="font-bold text-md text-white">Simpan</p>
-              </button>
+              <div className="flex justify-end mt-10">
+                <button
+                  type="button"
+                  name="image"
+                  className="bg-costumeBlue w-fit flex items-center justify-center gap-1 rounded-lg py-3 p-5"
+                >
+                  <FloppyDisk size={24} color="#FFFFFF" weight="bold" />
+                  <p className="font-bold text-md text-white">Simpan</p>
+                </button>
+              </div>
             </div>
           ) : (
             <div className="flex items-center justify-center h-screen w-full py-10">

@@ -11,7 +11,6 @@ export default function EditModul() {
     const fetchCourseData = async () => {
       try {
         const data = await getModulesByCourseId(id);
-        console.log(data);
         setModule(data);
       } catch (error) {
         console.log("Error fetching course data:", error);
@@ -20,14 +19,6 @@ export default function EditModul() {
 
     fetchCourseData();
   }, [id]);
-
-  const handleSetEditMode = (index) => {
-    setEditMode((prev) => {
-      const newEditMode = [...prev];
-      newEditMode[index] = !newEditMode[index];
-      return newEditMode;
-    });
-  };
 
   const handleAddModule = (e) => {
     e.preventDefault();
@@ -47,18 +38,16 @@ export default function EditModul() {
     ]);
 
     const index = module.length;
-
-    handleSetEditMode(index);
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h1 className="text-xl font-bold text-center text-costumeBlue">
+      <h1 className="text-xl lg:text-2xl font-bold text-center text-costumeBlue">
         Detail Modul
       </h1>
       <div className="p-5 shadow-xl rounded-lg w-full">
         {module &&
-          module.map((data, index) => (
+          module.map((data) => (
             <AccordionComponent
               title={data.title}
               index={data.id}
@@ -70,10 +59,9 @@ export default function EditModul() {
                   index={video.id}
                   key={video.id}
                 >
-                  <div className="video-responsive">
+                  <div className="w-full  p-3">
                     <iframe
-                      width="853"
-                      height="480"
+                      className="w-full md:h-[300px] lg:h-[500px]"
                       src={`https://www.youtube.com/embed/${video.videoUrl}`}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen

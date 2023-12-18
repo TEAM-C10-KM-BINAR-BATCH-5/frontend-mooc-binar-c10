@@ -20,7 +20,7 @@ export default function AccordionComponent({ children, title, index }) {
       <div className="flex flex-row justify-between items-center">
         {!edit ? (
           <AccordionHeader
-            className={`border-b-0 transition-colors  ${
+            className={`border-b-0 transition-colors text-sm lg:text-base ${
               open === index ? "text-costumeBlue hover:!text-costumeBlue" : ""
             }`}
             onClick={() => handleOpen(index)}
@@ -32,7 +32,7 @@ export default function AccordionComponent({ children, title, index }) {
             <input
               type="text"
               defaultValue={title}
-              className="w-full border-2 p-2 border-gray-400 rounded-lg"
+              className="w-full border-2 p-2 border-gray-400 rounded-lg text-sm lg:text-base"
             />
           </AccordionHeader>
         )}
@@ -46,7 +46,7 @@ export default function AccordionComponent({ children, title, index }) {
         </div>
       </div>
       {open === index && (
-        <AccordionBody className="pt-0 text-base font-normal w-full">
+        <AccordionBody className="pt-0 text-sm lg:text-base font-normal w-full h-full">
           {children}
         </AccordionBody>
       )}

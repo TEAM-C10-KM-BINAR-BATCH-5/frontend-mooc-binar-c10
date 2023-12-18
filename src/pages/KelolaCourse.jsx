@@ -17,7 +17,7 @@ export default function KelolaCourse() {
           onClick={goBack}
         >
           <CaretLeft />
-          Kembali
+          <p className="hidden md:block"> Kembali </p>
         </div>
         <div className="mb-3">
           <EditCourse />

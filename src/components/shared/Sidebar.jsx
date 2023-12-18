@@ -19,36 +19,41 @@ export default function Sidebar() {
   const { pathname } = useLocation();
 
   return (
-    <div className="bg-costumeBlue w-12 sm:w-56 flex flex-col items-center transition-all">
-      <div className="flex items-center justify-center py-10">
-        <img src={logo} className="w-10 sm:w-20" alt="" />
+    <div className="bg-costumeBlue w-full flex flex-col items-center md:w-56 itransition-all py-2 rounded-lg md:rounded-none">
+      <div className="hidden md:flex  items-center justify-center py-10">
+        <img src={logo} className="w-10 md:w-20" alt="" />
       </div>
-      <div className="py-2 p-5 flex flex-col gap-3 items-left">
-        {SIDEBAR_LINKS.map((link) => (
-          <Link
-            key={link.key}
-            to={link.path}
-            className={classNames(
-              pathname === link.path ? "bg-blue-500 text-white" : "text-white",
-              linkClass
-            )}
-          >
-            <span>{link.icon}</span>
-            <span className="hidden sm:block">{link.label}</span>
-          </Link>
+      <div className="flex flex-row md:flex-col items-start gap-14 md:gap-3 justify-between md:justify-start">
+        {SIDEBAR_LINKS.map((link, index) => (
+          <div key={index}>
+            <Link
+              key={link.key}
+              to={link.path}
+              className={classNames(
+                pathname === link.path
+                  ? "bg-blue-500 text-white"
+                  : "text-white",
+                linkClass
+              )}
+            >
+              <span>{link.icon}</span>
+              <span className="hidden sm:block">{link.label}</span>
+            </Link>
+          </div>
         ))}
-      </div>
-      <div className="py-2 p-5 mr-0 sm:mr-9">
-        <button
-          onClick={() => setShowModal({ visible: true, content: "logout" })}
-          type="button"
-          className="flex items-center gap-2 text-white hover:bg-blue-400 hover:no-underline active:bg-indigo-600 rounded-lg text-base px-3 py-2 font-bold"
-        >
-          <span>
-            <SignOut size={24} color="#ffffff" weight="bold" />
-          </span>
-          <h2 className="hidden sm:block">keluar</h2>
-        </button>
+
+        <div>
+          <button
+            onClick={() => setShowModal({ visible: true, content: "logout" })}
+            type="button"
+            className="flex items-center gap-2 text-white hover:bg-blue-400 hover:no-underline active:bg-indigo-600 rounded-lg text-base px-3 py-2 font-bold w-full"
+          >
+            <span>
+              <SignOut size={24} color="#ffffff" weight="bold" />
+            </span>
+            <h2 className="hidden sm:block">keluar</h2>
+          </button>
+        </div>
       </div>
     </div>
   );
