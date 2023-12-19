@@ -45,7 +45,7 @@ export default function EditCourse() {
     <>
       <div className="items-center justify-center">
         <h1 className="text-xl lg:text-2xl font-bold text-center text-costumeBlue mb-3">
-          Detail Course
+          Detail Kelas
         </h1>
         <div className="bg-white shadow-lg rounded-lg">
           {courseData ? (
@@ -72,68 +72,81 @@ export default function EditCourse() {
                     />
                   </label>
 
-                  <div className="flex flex-col gap-2">
-                    <label className="block text-gray-700 mb-2">
-                      <p className="text-sm font-bold">Title</p>
-                      <input
-                        className="appearance-none border border-black rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue focus:shadow-outline w-full"
-                        type="text"
-                        value={courseData.title}
-                      />
-                    </label>
-                    <div className="flex flex-row gap-2 items-center">
-                      <div className="flex flex-col">
-                        <label className="block text-gray-700 mb-2">
-                          <p className="text-sm font-bold">Instructor</p>
-                          <input
-                            className="appearance-none border w-full border-black rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue focus:shadow-outline"
-                            type="text"
-                            value={courseData.instructor}
-                          />
-                        </label>
+                  <div className="flex flex-col md:flex-row gap-2">
+                    <div className="flex flex-col">
+                      <label className="block text-gray-700 mb-2">
+                        <p className="text-sm font-bold">Judul Kelas</p>
+                        <input
+                          className="appearance-none border border-black rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue focus:shadow-outline w-full"
+                          type="text"
+                          value={courseData.title}
+                        />
+                      </label>
 
-                        <label className="block text-gray-700 mb-2">
-                          <p className="text-sm font-bold">Price</p>
-                          <input
-                            className="appearance-none border w-full rounded-lg py-2 px-3 text-gray-700 leading-tight  focus:outline-costumeBlue border-black"
-                            type="text"
-                            value={courseData.price}
-                          />
-                        </label>
-                      </div>
+                      <label className="block text-gray-700 mb-2">
+                        <p className="text-sm font-bold">Instruktur</p>
+                        <input
+                          className="appearance-none border w-full border-black rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue focus:shadow-outline"
+                          type="text"
+                          value={courseData.instructor}
+                        />
+                      </label>
 
-                      <div className="flex flex-col">
-                        <label className="block text-gray-700 mb-2">
-                          <p className="text-sm font-bold">Level</p>
-                          <input
-                            className="appearance-none border w-full rounded-lg py-2 px-3 text-gray-700 leading-tight  focus:outline-costumeBlue border-black"
-                            type="text"
-                            value={courseData.level}
-                          />
-                        </label>
-                        <label className="block text-gray-700 mb-2 col-span-2 md:col-auto">
-                          <p className="text-sm font-bold">Category</p>
-                          <select
-                            className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue border-black"
-                            value={courseData.categoryId}
-                            name="categoryId"
-                          >
-                            <option value="">Pilih kategori</option>
-                            {categories.map((category) => (
-                              <option key={category.id} value={category.id}>
-                                {category.name}
-                              </option>
-                            ))}
-                          </select>
-                        </label>
-                      </div>
+                      <label className="block text-gray-700 mb-2">
+                        <p className="text-sm font-bold">Harga</p>
+                        <input
+                          className="appearance-none border w-full rounded-lg py-2 px-3 text-gray-700 leading-tight  focus:outline-costumeBlue border-black"
+                          type="text"
+                          value={courseData.price}
+                        />
+                      </label>
+                    </div>
+
+                    <div className="flex flex-col">
+                      <label className="block text-gray-700 mb-2">
+                        <p className="text-sm font-bold">Level</p>
+                        <select
+                          className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue border-black"
+                          value={courseData.level}
+                          name="level"
+                        >
+                          <option value="">Pilih level</option>
+                          <option value="Beginner">Beginner</option>
+                          <option value="Intermediate">Intermediate</option>
+                          <option value="Advance">Advance</option>
+                        </select>
+                      </label>
+                      <label className="block text-gray-700 mb-2 col-span-2 md:col-auto">
+                        <p className="text-sm font-bold">Kategori</p>
+                        <select
+                          className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue border-black"
+                          value={courseData.categoryId}
+                          name="categoryId"
+                        >
+                          <option value="">Pilih kategori</option>
+                          {categories.map((category) => (
+                            <option key={category.id} value={category.id}>
+                              {category.name}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+
+                      <label className="block text-gray-700 mb-2">
+                        <p className="text-sm font-bold">Link Telegram</p>
+                        <input
+                          className="appearance-none border w-full rounded-lg py-2 px-3 text-gray-700 leading-tight  focus:outline-costumeBlue border-black"
+                          type="text"
+                          value={courseData.telegramLink}
+                        />
+                      </label>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 w-full">
                   <label className="text-gray-700" htmlFor="name">
-                    <p className="font-bold text-sm">About</p>
+                    <p className="font-bold text-sm">Tentang Kelas</p>
                     <textarea
                       className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border  rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-costumeBlue focus:border-transparent border-black resize-none"
                       id="comment"
@@ -145,7 +158,7 @@ export default function EditCourse() {
                   </label>
                   <div className="flex flex-col md:flex-row gap-2 w-full">
                     <label className="text-gray-700 w-full" htmlFor="name">
-                      <p className="font-bold text-sm">Objective</p>
+                      <p className="font-bold text-sm">Tujuan</p>
                       <textarea
                         className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-black rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-costumeBlue focus:border-transparent resize-none"
                         id="comment"
