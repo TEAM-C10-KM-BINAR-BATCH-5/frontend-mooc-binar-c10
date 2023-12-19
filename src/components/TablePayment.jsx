@@ -78,10 +78,10 @@ function Table() {
               </tr>
             </thead>
             <tbody>
-              {currentItems.map((order) => (
+              {currentItems?.map((order) => (
                 <tr key={order.id}>
                   <td className="p-3 text-sm text-gray-700 ">
-                    {order.User.name}
+                    {order?.User?.name}
                   </td>
                   <td className="p-3 text-sm text-gray-700 ">
                     {order.Course.Category.name}

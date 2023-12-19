@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import AccordionComponent from "./AccordionComponent";
 import { getModulesByCourseId } from "../libs/api";
 import { useParams } from "react-router-dom";
+import EditVideo from "./EditVideo";
+import { FloppyDisk } from "@phosphor-icons/react";
 
 export default function EditModul() {
   const [module, setModule] = useState();
@@ -42,16 +44,17 @@ export default function EditModul() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h1 className="text-xl lg:text-2xl font-bold text-center text-costumeBlue">
+      <h1 className="text-xl lg:text-2xl font-bold text-center text-costumeBlue mb-3">
         Detail Modul
       </h1>
-      <div className="p-5 shadow-xl rounded-lg w-full">
+      <div className="p-5 shadow-lg rounded-lg w-full  bg-white">
         {module &&
           module.map((data) => (
             <AccordionComponent
               title={data.title}
               index={data.id}
               key={data.id}
+              isLocked={data.isLocked}
             >
               {data.Videos.map((video) => (
                 <AccordionComponent
@@ -59,15 +62,7 @@ export default function EditModul() {
                   index={video.id}
                   key={video.id}
                 >
-                  <div className="w-full  p-3">
-                    <iframe
-                      className="w-full md:h-[300px] lg:h-[500px]"
-                      src={`https://www.youtube.com/embed/${video.videoUrl}`}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      title="Embedded youtube"
-                    />
-                  </div>
+                  <EditVideo video={video} />
                 </AccordionComponent>
               ))}
             </AccordionComponent>
@@ -76,8 +71,18 @@ export default function EditModul() {
           className="p-2 border-2 border-costumeBlue text-costumeBlue rounded-lg opacity-50 text-sm"
           onClick={handleAddModule}
         >
-          Tambah Modul
+          + Tambah Modul
         </button>
+        <div className="mt-4 flex justify-end">
+          <button
+            type="button"
+            name="image"
+            className="bg-costumeBlue w-fit flex items-center justify-center gap-1 rounded-lg py-3 p-5"
+          >
+            <FloppyDisk size={24} color="#FFFFFF" weight="bold" />
+            <p className="font-bold text-md text-white">Simpan</p>
+          </button>
+        </div>
       </div>
     </div>
   );

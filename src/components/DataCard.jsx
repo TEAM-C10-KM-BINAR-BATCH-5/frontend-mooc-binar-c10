@@ -1,9 +1,12 @@
 import icons from "../assets/icon.png";
 import { useState, useEffect } from "react";
 import { getDashboard } from "../libs/api";
+import { triggerDataUpdateState } from "../atom/formAtom";
+import { useRecoilState } from "recoil";
 
 export default function DataCard() {
   const [data, setData] = useState([]);
+  const [triggerDataUpdate] = useRecoilState(triggerDataUpdateState);
 
   useEffect(() => {
     const fetchDashoard = async () => {
@@ -11,7 +14,7 @@ export default function DataCard() {
       setData(dataDashobard);
     };
     fetchDashoard();
-  }, []);
+  }, [triggerDataUpdate]);
 
   return (
     <div className="grid md:grid-cols-3 grid-cols-2 py-4 md:py-8 gap-2 mx-2 transition-all">

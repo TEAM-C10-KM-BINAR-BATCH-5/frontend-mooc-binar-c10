@@ -29,7 +29,7 @@ export default function Layout() {
       </div>
       <div className="flex flex-col w-[calc(100%-16rem)] sm:w-[calc(100%-56rem)]  flex-1">
         <Navbar />
-        <div className="flex-1 p-4 min-h-0 overflow-auto overflow-x-hidden w-full">
+        <div className="flex-1 p-4 min-h-0 overflow-auto overflow-x-hidden w-full bg-gray-100">
           <Outlet />
         </div>
         <div className="w-full md:hidden">
