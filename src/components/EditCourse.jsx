@@ -54,16 +54,26 @@ export default function EditCourse() {
 
   const handleSaveData = async () => {
     try {
-      setIsLoading(true);
       const result = await Swal.fire({
-        title: "Apakah anda ingin menyimpan perubahan?",
-
-        confirmButtonText: "Simpan",
+        title: "Apakah anda yakin?",
+        text: "Anda dapat mengubahnya lagi nanti",
+        icon: "question",
         showCancelButton: true,
         cancelButtonText: "Tidak",
+        confirmButtonText: "Ya, ubah",
+        customClass: {
+          cancelButton:
+            "bg-costumeBlue text-white rounded-lg p-3 hover:brightness-75 transition-all ease-linear w-1/4",
+          confirmButton:
+            "bg-gray-200 text-costumeBlue rounded-lg p-3 hover:brightness-75 transition-all ease-linear w-1/4",
+          actions: "flex flex-row gap-12 justify-center w-full",
+          popup: "rounded-lg",
+        },
+        buttonsStyling: false,
       });
 
       if (result.isConfirmed) {
+        setIsLoading(true);
         const response = await editCourse(id, courseData);
 
         if (response.success) {
