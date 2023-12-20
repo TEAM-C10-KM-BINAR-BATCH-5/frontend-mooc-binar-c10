@@ -1,15 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { editCourse, getCategory, getCoursesById } from "../libs/api";
 import { UploadSimple } from "@phosphor-icons/react/dist/ssr";
 import { FloppyDisk, PencilSimpleLine } from "@phosphor-icons/react";
 import Swal from "sweetalert2";
+import { shallowEqual } from "shallow-equal";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { loadingState } from "../atom/loadingAtom";
+import { triggerDataUpdateState } from "../atom/formAtom";
 
 export default function EditCourse() {
   const [courseData, setCourseData] = useState(null);
   const [categories, setCategories] = useState();
   const [image, setImage] = useState("");
   const { id } = useParams();
+  const courseRef = useRef();
+  const isEdited = !shallowEqual(courseData, courseRef.current);
+  const setIsLoading = useSetRecoilState(loadingState);
+  const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
+    triggerDataUpdateState
+  );
 
   useEffect(() => {
     async function fetchCategories() {
@@ -27,7 +37,7 @@ export default function EditCourse() {
     const fetchCourseData = async () => {
       try {
         const data = await getCoursesById(id);
-        console.log(data);
+        courseRef.current = data;
         setCourseData(data);
       } catch (error) {
         console.error("Error fetching course data:", error);
@@ -35,7 +45,7 @@ export default function EditCourse() {
     };
 
     fetchCourseData();
-  }, [id]);
+  }, [id, triggerDataUpdate]);
 
   const handleImageUpload = (event) => {
     const uploadedImage = URL.createObjectURL(event.target.files[0]);
@@ -44,6 +54,7 @@ export default function EditCourse() {
 
   const handleSaveData = async () => {
     try {
+      setIsLoading(true);
       const result = await Swal.fire({
         title: "Apakah anda ingin menyimpan perubahan?",
 
@@ -57,26 +68,33 @@ export default function EditCourse() {
 
         if (response.success) {
           Swal.fire("Berhasil menyimpan perubahan", "", "success");
+          setTriggerDataUpdate(!triggerDataUpdate);
         } else {
           Swal.fire("Gagal menyimpan perubahan", "", "error");
         }
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    setCourseData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    if (files) {
-      setFormData(() => ({
-        [name]: files[0],
-      }));
-    }
+
+    setCourseData((prev) => {
+      if (files) {
+        return {
+          ...prev,
+          [name]: files[0],
+        };
+      }
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
   };
 
   return (
@@ -106,7 +124,10 @@ export default function EditCourse() {
                       name="image"
                       id="image"
                       style={{ display: "none" }}
-                      onChange={(handleImageUpload, handleInputChange)}
+                      onChange={(e) => {
+                        handleInputChange(e);
+                        handleImageUpload(e);
+                      }}
                     />
                   </label>
 
@@ -236,8 +257,9 @@ export default function EditCourse() {
                 <button
                   type="button"
                   name="image"
-                  className="bg-costumeBlue w-fit flex items-center justify-center gap-1 rounded-lg py-3 p-5"
+                  className="bg-costumeBlue w-fit flex items-center justify-center gap-1 rounded-lg py-3 p-5 disabled:opacity-50"
                   onClick={handleSaveData}
+                  disabled={!isEdited}
                 >
                   <FloppyDisk size={24} color="#FFFFFF" weight="bold" />
                   <p className="font-bold text-md text-white">Simpan</p>
