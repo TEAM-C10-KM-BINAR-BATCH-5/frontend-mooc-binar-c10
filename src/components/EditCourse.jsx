@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getCategory, getCoursesById } from "../libs/api";
+import { editCourse, getCategory, getCoursesById } from "../libs/api";
 import { UploadSimple } from "@phosphor-icons/react/dist/ssr";
 import { FloppyDisk, PencilSimpleLine } from "@phosphor-icons/react";
+import Swal from "sweetalert2";
 
 export default function EditCourse() {
   const [courseData, setCourseData] = useState(null);
   const [categories, setCategories] = useState();
+  const [image, setImage] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
@@ -25,6 +27,7 @@ export default function EditCourse() {
     const fetchCourseData = async () => {
       try {
         const data = await getCoursesById(id);
+        console.log(data);
         setCourseData(data);
       } catch (error) {
         console.error("Error fetching course data:", error);
@@ -34,11 +37,46 @@ export default function EditCourse() {
     fetchCourseData();
   }, [id]);
 
-  const [image, setImage] = useState(""); // State untuk menyimpan foto yang diunggah
-
   const handleImageUpload = (event) => {
-    const uploadedImage = URL.createObjectURL(event.target.files[0]); // Mendapatkan URL foto yang diunggah
-    setImage(uploadedImage); // Mengatur foto yang diunggah ke dalam state
+    const uploadedImage = URL.createObjectURL(event.target.files[0]);
+    setImage(uploadedImage);
+  };
+
+  const handleSaveData = async () => {
+    try {
+      const result = await Swal.fire({
+        title: "Apakah anda ingin menyimpan perubahan?",
+
+        confirmButtonText: "Simpan",
+        showCancelButton: true,
+        cancelButtonText: "Tidak",
+      });
+
+      if (result.isConfirmed) {
+        const response = await editCourse(id, courseData);
+
+        if (response.success) {
+          Swal.fire("Berhasil menyimpan perubahan", "", "success");
+        } else {
+          Swal.fire("Gagal menyimpan perubahan", "", "error");
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, files } = e.target;
+    setCourseData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    if (files) {
+      setFormData(() => ({
+        [name]: files[0],
+      }));
+    }
   };
 
   return (
@@ -51,7 +89,7 @@ export default function EditCourse() {
           {courseData ? (
             <div className="p-5 shadow-xl rounded-lg">
               <form action="">
-                <div className="flex flex-col md:flex-row gap-5 items-center justify-center">
+                <div className="flex flex-col md:flex-row gap-5 md:items-center justify-center">
                   <label className="group cursor-pointer transition-all ease-linear w-full md:w-5/12 hover:brightness-75">
                     <img
                       src={image || courseData.imageUrl}
@@ -68,18 +106,20 @@ export default function EditCourse() {
                       name="image"
                       id="image"
                       style={{ display: "none" }}
-                      onChange={handleImageUpload}
+                      onChange={(handleImageUpload, handleInputChange)}
                     />
                   </label>
 
                   <div className="flex flex-col md:flex-row gap-2">
                     <div className="flex flex-col">
-                      <label className="block text-gray-700 mb-2">
+                      <label className="block text-gray-700 mb-2 w-full">
                         <p className="text-sm font-bold">Judul Kelas</p>
                         <input
                           className="appearance-none border border-black rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue focus:shadow-outline w-full"
                           type="text"
+                          name="title"
                           value={courseData.title}
+                          onChange={handleInputChange}
                         />
                       </label>
 
@@ -88,7 +128,9 @@ export default function EditCourse() {
                         <input
                           className="appearance-none border w-full border-black rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue focus:shadow-outline"
                           type="text"
+                          name="instructor"
                           value={courseData.instructor}
+                          onChange={handleInputChange}
                         />
                       </label>
 
@@ -97,7 +139,9 @@ export default function EditCourse() {
                         <input
                           className="appearance-none border w-full rounded-lg py-2 px-3 text-gray-700 leading-tight  focus:outline-costumeBlue border-black"
                           type="text"
+                          name="price"
                           value={courseData.price}
+                          onChange={handleInputChange}
                         />
                       </label>
                     </div>
@@ -109,6 +153,7 @@ export default function EditCourse() {
                           className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue border-black"
                           value={courseData.level}
                           name="level"
+                          onChange={handleInputChange}
                         >
                           <option value="">Pilih level</option>
                           <option value="Beginner">Beginner</option>
@@ -122,6 +167,7 @@ export default function EditCourse() {
                           className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-costumeBlue border-black"
                           value={courseData.categoryId}
                           name="categoryId"
+                          onChange={handleInputChange}
                         >
                           <option value="">Pilih kategori</option>
                           {categories.map((category) => (
@@ -137,6 +183,8 @@ export default function EditCourse() {
                         <input
                           className="appearance-none border w-full rounded-lg py-2 px-3 text-gray-700 leading-tight  focus:outline-costumeBlue border-black"
                           type="text"
+                          name="telegramLink"
+                          onChange={handleInputChange}
                           value={courseData.telegramLink}
                         />
                       </label>
@@ -149,9 +197,9 @@ export default function EditCourse() {
                     <p className="font-bold text-sm">Tentang Kelas</p>
                     <textarea
                       className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border  rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-costumeBlue focus:border-transparent border-black resize-none"
-                      id="comment"
+                      onChange={handleInputChange}
                       value={courseData.about}
-                      name="comment"
+                      name="about"
                       rows="5"
                       cols="40"
                     ></textarea>
@@ -161,9 +209,9 @@ export default function EditCourse() {
                       <p className="font-bold text-sm">Tujuan</p>
                       <textarea
                         className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-black rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-costumeBlue focus:border-transparent resize-none"
-                        id="comment"
                         value={courseData.objective}
-                        name="comment"
+                        onChange={handleInputChange}
+                        name="objective"
                         rows="5"
                         cols="40"
                       ></textarea>
@@ -175,7 +223,8 @@ export default function EditCourse() {
                         className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-black rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-costumeBlue focus:border-transparent resize-none"
                         id="comment"
                         value={courseData.onboarding}
-                        name="comment"
+                        onChange={handleInputChange}
+                        name="onboarding"
                         rows="5"
                         cols="40"
                       ></textarea>
@@ -188,6 +237,7 @@ export default function EditCourse() {
                   type="button"
                   name="image"
                   className="bg-costumeBlue w-fit flex items-center justify-center gap-1 rounded-lg py-3 p-5"
+                  onClick={handleSaveData}
                 >
                   <FloppyDisk size={24} color="#FFFFFF" weight="bold" />
                   <p className="font-bold text-md text-white">Simpan</p>

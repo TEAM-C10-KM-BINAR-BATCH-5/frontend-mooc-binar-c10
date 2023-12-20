@@ -131,6 +131,37 @@ export const createCourse = async (data) => {
   }
 };
 
+export const editCourse = async (id, data) => {
+  try {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_API_BASE_URL}/course/${id}`,
+      {
+        title: data.title,
+        level: data.level,
+        telegramLink: data.telegramLink,
+        price: parseInt(data.price),
+        rating: data.rating,
+        about: data.about,
+        objective: data.objective,
+        categoryId: data.categoryId,
+        onboarding: data.onboarding,
+        instructor: data.instructor,
+        image: data.image,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
 export const getDataTransaction = async () => {
   try {
     const response = await axios.get(

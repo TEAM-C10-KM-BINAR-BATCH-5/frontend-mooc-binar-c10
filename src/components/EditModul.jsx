@@ -28,6 +28,7 @@ export default function EditModul() {
       ...prev,
       {
         title: "New Chapter",
+        isLocked: false,
         Videos: [
           {
             no: 1,
