@@ -77,10 +77,32 @@ export default function EditCourse() {
         const response = await editCourse(id, courseData);
 
         if (response.success) {
-          Swal.fire("Berhasil menyimpan perubahan", "", "success");
+          Swal.fire({
+            title: "Berhasil!",
+            text: "Berhasil menyimpan perubahan",
+            icon: "success",
+            customClass: {
+              popup: "rounded-lg",
+              confirmButton:
+                "bg-gray-200 text-costumeBlue rounded-lg p-3 hover:brightness-75 transition-all ease-linear w-1/4",
+              actions: "flex flex-row gap-12 justify-center w-full",
+            },
+            buttonsStyling: false,
+          });
           setTriggerDataUpdate(!triggerDataUpdate);
         } else {
-          Swal.fire("Gagal menyimpan perubahan", "", "error");
+          Swal.fire({
+            title: "Gagal",
+            text: "Gagal menyimpan perubahan",
+            icon: "error",
+            customClass: {
+              popup: "rounded-lg",
+              confirmButton:
+                "bg-gray-200 text-costumeBlue rounded-lg p-3 hover:brightness-75 transition-all ease-linear w-1/4",
+              actions: "flex flex-row gap-12 justify-center w-full",
+            },
+            buttonsStyling: false,
+          });
         }
       }
     } catch (err) {

@@ -1,3 +1,4 @@
+import { FloppyDisk } from "@phosphor-icons/react";
 import React from "react";
 
 export default function EditVideo({ video }) {
@@ -10,7 +11,7 @@ export default function EditVideo({ video }) {
         allowFullScreen
         title="Embedded youtube"
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col justify-start">
         <label className="block text-gray-700 mb-2">
           <p className="text-sm font-bold">ID Youtube </p>
           <input
@@ -35,6 +36,15 @@ export default function EditVideo({ video }) {
             value={video.duration}
           />
         </label>
+
+        <button
+          type="button"
+          name="image"
+          className="bg-costumeBlue w-fit flex items-center justify-center gap-1 rounded-lg py-3 p-5"
+        >
+          <FloppyDisk size={24} color="#FFFFFF" weight="bold" />
+          <p className="font-bold text-md text-white">Simpan</p>
+        </button>
       </div>
     </div>
   );
