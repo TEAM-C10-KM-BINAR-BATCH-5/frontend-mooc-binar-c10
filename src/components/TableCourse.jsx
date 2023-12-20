@@ -115,16 +115,16 @@ export default function TableCourse() {
         console.log("Item berhasil dihapus:", response.data);
         setTriggerDataUpdate(!triggerDataUpdate);
         Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
+          title: "Berhasil!",
+          text: "Data anda telah berhasil dihapus.",
           icon: "success",
         });
       }
     } catch (error) {
       console.error("Gagal menghapus item:", error);
       Swal.fire({
-        title: "Failed!",
-        text: "Failed to delete your file.",
+        title: "Gagal!",
+        text: "Gagal menghapus file anda.",
         icon: "error",
       });
     }
