@@ -7,9 +7,9 @@ export const formatDate = (isoDate) => {
     hour: "numeric",
     minute: "numeric",
     hour12: true,
-    timeZone: "Asia/Makassar",
+    timeZone: "UTC",
   };
 
-  const formattedDate = date.toLocaleDateString("en-US", options);
-  return formattedDate;
+  const formatter = new Intl.DateTimeFormat("en-US", options);
+  return formatter.format(date);
 };

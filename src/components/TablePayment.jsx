@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { Funnel } from "@phosphor-icons/react/dist/ssr";
 import { MagnifyingGlass } from "@phosphor-icons/react";
-import Pagination from "./Pagination";
 import { getDataTransaction } from "../libs/api";
 import { formatDate } from "../../utils/TimeFormater";
+import { triggerDataUpdateState } from "../atom/formAtom";
+import Pagination from "./Pagination";
 
 function Table() {
+  const [triggerDataUpdate] = useRecoilState(triggerDataUpdateState);
   const [transaction, setTransaction] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -16,7 +19,7 @@ function Table() {
       setTransaction(dataTransaction);
     };
     fetchDataTransaction();
-  }, []);
+  }, [triggerDataUpdate]);
 
   // pagination
   const indexOfLastItem = currentPage * itemsPerPage;
