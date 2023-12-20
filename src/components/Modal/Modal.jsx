@@ -1,13 +1,7 @@
-import { StepperWithContent } from "../StepperWithContent";
-import AddCourseForm from "../Forms/AddCourseForm";
-import AddModuleForm from "../Forms/AddModulesForm";
-import { XCircle } from "@phosphor-icons/react";
 import { useRecoilState } from "recoil";
-import { loadingState } from "../../atom/loadingAtom";
-import LoadingModal from "./LoadingModal";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { modalState } from "../../atom/modalAtom";
-import Logout from "../ModalContent/Logout";
 import AddCourse from "../ModalContent/AddCourse";
 
 export default function Modal() {
@@ -26,8 +20,6 @@ export default function Modal() {
             exit={{ opacity: 0 }}
             className="h-screen flex items-center"
           >
-            {showModal.content == "logout" && <Logout />}
-
             {showModal.content == "addCourse" && <AddCourse />}
           </motion.div>
         </div>
