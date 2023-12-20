@@ -9,6 +9,7 @@ export default function Logout() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setShowModal({ visible: false, content: "" });
     navigate("/login");
   };
 

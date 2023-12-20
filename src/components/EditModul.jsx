@@ -74,16 +74,6 @@ export default function EditModul() {
         >
           + Tambah Modul
         </button>
-        <div className="mt-4 flex justify-end">
-          <button
-            type="button"
-            name="image"
-            className="bg-costumeBlue w-fit flex items-center justify-center gap-1 rounded-lg py-3 p-5"
-          >
-            <FloppyDisk size={24} color="#FFFFFF" weight="bold" />
-            <p className="font-bold text-md text-white">Simpan</p>
-          </button>
-        </div>
       </div>
     </div>
   );
