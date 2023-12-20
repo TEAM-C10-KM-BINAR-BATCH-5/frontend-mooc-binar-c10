@@ -16,6 +16,7 @@ import { loadingState } from "../../atom/loadingAtom";
 import { AnimatePresence, motion } from "framer-motion";
 import { createCourse, createModule, createVideo } from "../../libs/api";
 import { isFormEmpty } from "../../../utils/formCheck";
+import { swalFireResult } from "../../libs/swalFire";
 
 export default function AddModuleForm() {
   const [formData, setFormData] = useRecoilState(addModuleFormState);
@@ -108,12 +109,15 @@ export default function AddModuleForm() {
           });
         });
       });
+
+      swalFireResult("Berhasil!", "Berhasil membuat data", "success");
       resetCourse();
       resetModule();
       setTriggerDataUpdate(!triggerDataUpdate);
       setShowModal(false);
     } catch (err) {
       console.log(err.message);
+      swalFireResult("Gagal", "Gagal membuat data", "error");
     } finally {
       setIsLoading(false);
     }

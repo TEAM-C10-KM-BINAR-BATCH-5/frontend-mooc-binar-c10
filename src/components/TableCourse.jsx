@@ -27,6 +27,7 @@ import Modal from "./Modal/Modal";
 import AddCourse from "./ModalContent/AddCourse";
 import Pagination from "./Pagination";
 import { priceFormatter } from "../../utils/PriceFormater";
+import { swalFireConfirm, swalFireResult } from "../libs/swalFire";
 
 export default function TableCourse() {
   const setShowModal = useSetRecoilState(modalState);
@@ -82,51 +83,35 @@ export default function TableCourse() {
     fetchCategories();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, title) => {
     try {
-      const result = await Swal.fire({
-        title: "Apakah anda yakin?",
-        text: "Anda tidak akan dapat mengembalikan perubahan ini",
-        icon: "warning",
-        showCancelButton: true,
-        cancelButtonText: "Tidak",
-        confirmButtonText: "Ya, hapus",
-        customClass: {
-          cancelButton:
-            "bg-costumeBlue text-white rounded-lg p-3 hover:brightness-75 transition-all ease-linear w-1/4",
-          confirmButton:
-            "bg-gray-200 text-costumeBlue rounded-lg p-3 hover:brightness-75 transition-all ease-linear w-1/4",
-          actions: "flex flex-row gap-12 justify-center w-full",
-          popup: "rounded-lg",
-        },
-        buttonsStyling: false,
-      });
+      const result = await swalFireConfirm(
+        `Apakah anda yakin?`,
+        `Anda akan menghapus ${title}`,
+        "warning"
+      );
       if (result.isConfirmed) {
-        const token = localStorage.getItem("token"); // Ambil token dari localStorage
+        const token = localStorage.getItem("token");
 
         const response = await axios.delete(
           `${import.meta.env.VITE_API_BASE_URL}/course/${id}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`, // Sertakan token dalam header Authorization
+              Authorization: `Bearer ${token}`,
             },
           }
         );
         console.log("Item berhasil dihapus:", response.data);
         setTriggerDataUpdate(!triggerDataUpdate);
-        Swal.fire({
-          title: "Berhasil!",
-          text: "Data anda telah berhasil dihapus.",
-          icon: "success",
-        });
+        swalFireResult(
+          "Berhasil!",
+          "Data anda telah berhasil dihapus",
+          "success"
+        );
       }
     } catch (error) {
       console.error("Gagal menghapus item:", error);
-      Swal.fire({
-        title: "Gagal!",
-        text: "Gagal menghapus file anda.",
-        icon: "error",
-      });
+      swalFireResult("Gagal", "Data anda gagal dihapus", "error");
     }
   };
 
@@ -436,7 +421,7 @@ export default function TableCourse() {
                         Kelola
                       </Link>
                       <button
-                        onClick={() => handleDelete(item.id)}
+                        onClick={() => handleDelete(item.id, item.title)}
                         className="rounded-lg px-2 py-1 bg-red-600 text-white font-semibold"
                       >
                         Hapus

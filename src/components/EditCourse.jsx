@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { editCourse, getCategory, getCoursesById } from "../libs/api";
-import { UploadSimple } from "@phosphor-icons/react/dist/ssr";
 import { FloppyDisk, PencilSimpleLine } from "@phosphor-icons/react";
-import Swal from "sweetalert2";
 import { shallowEqual } from "shallow-equal";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { loadingState } from "../atom/loadingAtom";
 import { triggerDataUpdateState } from "../atom/formAtom";
+import { swalFireConfirm, swalFireResult } from "../libs/swalFire";
 
 export default function EditCourse() {
   const [courseData, setCourseData] = useState(null);
@@ -54,59 +53,22 @@ export default function EditCourse() {
 
   const handleSaveData = async () => {
     try {
-      const result = await Swal.fire({
-        title: "Apakah anda yakin?",
-        text: "Anda dapat mengubahnya lagi nanti",
-        icon: "question",
-        showCancelButton: true,
-        cancelButtonText: "Tidak",
-        confirmButtonText: "Ya, ubah",
-        customClass: {
-          cancelButton:
-            "bg-costumeBlue text-white rounded-lg p-3 hover:brightness-75 transition-all ease-linear w-1/4",
-          confirmButton:
-            "bg-gray-200 text-costumeBlue rounded-lg p-3 hover:brightness-75 transition-all ease-linear w-1/4",
-          actions: "flex flex-row gap-12 justify-center w-full",
-          popup: "rounded-lg",
-        },
-        buttonsStyling: false,
-      });
+      const result = await swalFireConfirm(
+        "Apakah anda yakin?",
+        "Anda dapat mengubahnya lagi nanti",
+        "question"
+      );
 
       if (result.isConfirmed) {
         setIsLoading(true);
         const response = await editCourse(id, courseData);
 
-        if (response.success) {
-          Swal.fire({
-            title: "Berhasil!",
-            text: "Berhasil menyimpan perubahan",
-            icon: "success",
-            customClass: {
-              popup: "rounded-lg",
-              confirmButton:
-                "bg-gray-200 text-costumeBlue rounded-lg p-3 hover:brightness-75 transition-all ease-linear w-1/4",
-              actions: "flex flex-row gap-12 justify-center w-full",
-            },
-            buttonsStyling: false,
-          });
-          setTriggerDataUpdate(!triggerDataUpdate);
-        } else {
-          Swal.fire({
-            title: "Gagal",
-            text: "Gagal menyimpan perubahan",
-            icon: "error",
-            customClass: {
-              popup: "rounded-lg",
-              confirmButton:
-                "bg-gray-200 text-costumeBlue rounded-lg p-3 hover:brightness-75 transition-all ease-linear w-1/4",
-              actions: "flex flex-row gap-12 justify-center w-full",
-            },
-            buttonsStyling: false,
-          });
-        }
+        swalFireResult("Berhasil!", "Berhasil menyimpan perubahan", "success");
+        setTriggerDataUpdate(!triggerDataUpdate);
       }
     } catch (err) {
       console.log(err);
+      swalFireResult("Gagal", "Gagal menyimpan perubahan", "error");
     } finally {
       setIsLoading(false);
     }
@@ -191,7 +153,8 @@ export default function EditCourse() {
                         <p className="text-sm font-bold">Harga</p>
                         <input
                           className="appearance-none border w-full rounded-lg py-2 px-3 text-gray-700 leading-tight  focus:outline-costumeBlue border-black"
-                          type="text"
+                          type="number"
+                          min={0}
                           name="price"
                           value={courseData.price}
                           onChange={handleInputChange}
