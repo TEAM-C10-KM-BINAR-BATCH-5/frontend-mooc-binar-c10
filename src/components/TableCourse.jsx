@@ -1,343 +1,460 @@
 import {
-  ArrowsClockwise,
-  MagnifyingGlass,
-  PlusCircle,
-} from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
-import { getCategory, getCourses } from "../libs/api";
-import { Link } from "react-router-dom";
-import FilterButton from "./FilterButton";
-import Swal from "sweetalert2";
-import axios from "axios";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
-import { modalState } from "../atom/modalAtom";
-import { triggerDataUpdateState } from "../atom/formAtom";
-import { courseFilterState } from "../atom/courseAtom";
-import { Button, MenuItem } from "@material-tailwind/react";
-import FilterMenu from "./FilterMenu";
-import { filterVisibleState } from "../atom/filterAtom";
-import { AnimatePresence, motion } from "framer-motion";
-import Modal from "./Modal/Modal";
-import AddCourse from "./ModalContent/AddCourse";
-import Pagination from "./Pagination";
-import { priceFormatter } from "../../utils/PriceFormater";
+	ArrowsClockwise,
+	MagnifyingGlass,
+	PlusCircle,
+} from "@phosphor-icons/react"
+import { useEffect, useState } from "react"
+import { getCategory, getCourses } from "../libs/api"
+import { Link } from "react-router-dom"
+import FilterButton from "./FilterButton"
+import Swal from "sweetalert2"
+import axios from "axios"
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil"
+import { modalState } from "../atom/modalAtom"
+import { triggerDataUpdateState } from "../atom/formAtom"
+import { courseFilterState } from "../atom/courseAtom"
+import {
+	Button,
+	Menu,
+	MenuHandler,
+	MenuItem,
+	MenuList,
+} from "@material-tailwind/react"
+import FilterMenu from "./FilterMenu"
+import { filterVisibleState } from "../atom/filterAtom"
+import { AnimatePresence, motion } from "framer-motion"
+import Modal from "./Modal/Modal"
+import AddCourse from "./ModalContent/AddCourse"
+import Pagination from "./Pagination"
+import { priceFormatter } from "../../utils/PriceFormater"
 
 export default function TableCourse() {
-  const setShowModal = useSetRecoilState(modalState);
-  const [course, setCourse] = useState([]);
-  const [category, setCategory] = useState([]);
-  const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
-    triggerDataUpdateState
-  );
-  const [courseFilter, setCourseFilter] = useRecoilState(courseFilterState);
-  const resetCourseFilter = useResetRecoilState(courseFilterState);
-  const [filterVisible] = useRecoilState(filterVisibleState);
+	const setShowModal = useSetRecoilState(modalState)
+	const [course, setCourse] = useState([])
+	const [category, setCategory] = useState([])
+	const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
+		triggerDataUpdateState
+	)
+	const [courseFilter, setCourseFilter] = useRecoilState(courseFilterState)
+	const resetCourseFilter = useResetRecoilState(courseFilterState)
+	const [filterVisible] = useRecoilState(filterVisibleState)
 
-  const handleInputChange = (e) => {
-    e.preventDefault();
-    const { name, value, checked } = e.target;
-    if (name === "categoryIds") {
-      // Handle checkboxes for categories
-      if (checked) {
-        // If checkbox is checked, add the category ID to the array
-        setCourseFilter((prev) => ({
-          ...prev,
-          [name]: [...prev[name], value],
-        }));
-      } else {
-        // If checkbox is unchecked, remove the category ID from the array
-        setCourseFilter((prev) => ({
-          ...prev,
-          [name]: prev[name].filter((id) => id !== value),
-        }));
-      }
-    } else {
-      // Handle other input changes
-      setCourseFilter((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
-  };
+	const handleInputChange = (e) => {
+		e.preventDefault()
+		const { name, value, checked } = e.target
+		if (name === "categoryIds") {
+			// Handle checkboxes for categories
+			if (checked) {
+				// If checkbox is checked, add the category ID to the array
+				setCourseFilter((prev) => ({
+					...prev,
+					[name]: [...prev[name], value],
+				}))
+			} else {
+				// If checkbox is unchecked, remove the category ID from the array
+				setCourseFilter((prev) => ({
+					...prev,
+					[name]: prev[name].filter((id) => id !== value),
+				}))
+			}
+		} else {
+			// Handle other input changes
+			setCourseFilter((prev) => ({
+				...prev,
+				[name]: value,
+			}))
+		}
+	}
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      const coursesData = await getCourses(courseFilter);
-      setCourse(coursesData);
-    };
-    fetchCourses();
-  }, [triggerDataUpdate, courseFilter]);
+	useEffect(() => {
+		const fetchCourses = async () => {
+			const coursesData = await getCourses(courseFilter)
+			setCourse(coursesData)
+		}
+		fetchCourses()
+	}, [triggerDataUpdate, courseFilter])
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const categoriesData = await getCategory();
-      setCategory(categoriesData);
-    };
-    fetchCategories();
-  }, []);
+	useEffect(() => {
+		const fetchCategories = async () => {
+			const categoriesData = await getCategory()
+			setCategory(categoriesData)
+		}
+		fetchCategories()
+	}, [])
 
-  const handleDelete = async (id) => {
-    try {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "rgba(97, 72, 255, 1)",
-        confirmButtonText: "Yes, delete it!",
-      });
-      if (result.isConfirmed) {
-        const token = localStorage.getItem("token"); // Ambil token dari localStorage
+	const handleDelete = async (id) => {
+		try {
+			const result = await Swal.fire({
+				title: "Are you sure?",
+				text: "You won't be able to revert this!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#d33",
+				cancelButtonColor: "rgba(97, 72, 255, 1)",
+				confirmButtonText: "Yes, delete it!",
+			})
+			if (result.isConfirmed) {
+				const token = localStorage.getItem("token") // Ambil token dari localStorage
 
-        const response = await axios.delete(
-          `${import.meta.env.VITE_API_BASE_URL}/course/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Sertakan token dalam header Authorization
-            },
-          }
-        );
-        console.log("Item berhasil dihapus:", response.data);
-        setTriggerDataUpdate(!triggerDataUpdate);
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
-      }
-    } catch (error) {
-      console.error("Gagal menghapus item:", error);
-      Swal.fire({
-        title: "Failed!",
-        text: "Failed to delete your file.",
-        icon: "error",
-      });
-    }
-  };
+				const response = await axios.delete(
+					`${import.meta.env.VITE_API_BASE_URL}/course/${id}`,
+					{
+						headers: {
+							Authorization: `Bearer ${token}`, // Sertakan token dalam header Authorization
+						},
+					}
+				)
+				console.log("Item berhasil dihapus:", response.data)
+				setTriggerDataUpdate(!triggerDataUpdate)
+				Swal.fire({
+					title: "Deleted!",
+					text: "Your file has been deleted.",
+					icon: "success",
+				})
+			}
+		} catch (error) {
+			console.error("Gagal menghapus item:", error)
+			Swal.fire({
+				title: "Failed!",
+				text: "Failed to delete your file.",
+				icon: "error",
+			})
+		}
+	}
 
-  //pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+	//pagination
+	const [currentPage, setCurrentPage] = useState(1)
+	const [itemsPerPage] = useState(5)
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = course.slice(indexOfFirstItem, indexOfLastItem);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+	const indexOfLastItem = currentPage * itemsPerPage
+	const indexOfFirstItem = indexOfLastItem - itemsPerPage
+	const currentItems = course.slice(indexOfFirstItem, indexOfLastItem)
+	const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
-  return (
-    <>
-      <div className="px-4 pt-3 pb-4 rounded-sm flex-1 whitespace-nowrap">
-        <div className="flex  flex-row justify-between gap-2">
-          <div className="text-base sm:text-xl">
-            <strong>Kelola Course</strong>
-          </div>
-          <div className="flex flex-row justify-end gap-2">
-            <button
-              onClick={() =>
-                setShowModal({ visible: true, content: "addCourse" })
-              }
-              type="button"
-              className="bg-costumeBlue border border-costumeBlue border-solid rounded-xl flex  items-center gap-2 px-3 p-1"
-            >
-              <PlusCircle size={24} color="#ffffff" weight="bold" />
-              <span className="font-bold text-white hidden md:block">
-                Tambah
-              </span>
-            </button>
+	return (
+		<>
+			<div className="px-4 pt-3 pb-4 rounded-sm flex-1 whitespace-nowrap">
+				<div className="flex  flex-row justify-between gap-2">
+					<div className="text-base sm:text-xl">
+						<strong>Kelola Course</strong>
+					</div>
+					<div className="flex flex-row justify-end gap-2">
+						<button
+							onClick={() =>
+								setShowModal({ visible: true, content: "addCourse" })
+							}
+							type="button"
+							className="bg-costumeBlue border border-costumeBlue border-solid rounded-xl flex  items-center gap-2 px-3 p-1"
+						>
+							<PlusCircle size={24} color="#ffffff" weight="bold" />
+							<span className="font-bold text-white hidden md:block">
+								Tambah
+							</span>
+						</button>
 
-            <FilterButton />
-            <button>
-              <MagnifyingGlass
-                size={24}
-                className="text-costumeBlue"
-                weight="bold"
-              />
-            </button>
-          </div>
-        </div>
-        <AnimatePresence>
-          {filterVisible && (
-            <motion.div
-              initial={{ y: -10 }}
-              animate={{ y: 0 }}
-              exit={{ opacity: 0 }}
-            >
-              <div className="flex flex-row-reverse justify-start items-center gap-3 m-3 ">
-                <Button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    resetCourseFilter();
-                  }}
-                  className="bg-transparent border-2 border-costumeBlue text-costumeBlue opacity-50 rounded-lg p-2"
-                >
-                  <ArrowsClockwise size={15} weight="bold" />
-                </Button>
-                <FilterMenu title={"kelas"}>
-                  <MenuItem className="flex flex-row items-center gap-2 cursor-default">
-                    {" "}
-                    <input
-                      type="radio"
-                      name="courseType"
-                      value="Free"
-                      checked={courseFilter.courseType == "Free" ? true : false}
-                      className="cursor-pointer"
-                      onChange={handleInputChange}
-                    />
-                    <span>Free</span>
-                  </MenuItem>
-                  <MenuItem className="flex flex-row items-center gap-2 cursor-default">
-                    {" "}
-                    <input
-                      type="radio"
-                      name="courseType"
-                      value="Premium"
-                      checked={
-                        courseFilter.courseType == "Premium" ? true : false
-                      }
-                      onChange={handleInputChange}
-                      className="cursor-pointer"
-                    />
-                    <span>Premium</span>
-                  </MenuItem>
-                </FilterMenu>
+						<Menu open={filterVisible}>
+							<MenuHandler>
+								<div>
+									<FilterButton />
+								</div>
+							</MenuHandler>
+							<MenuList className="border border-gray-400 p-1">
+								<div className="flex flex-row-reverse justify-start items-center gap-3 m-3">
+									<Button
+										onClick={(e) => {
+											e.preventDefault()
+											resetCourseFilter()
+										}}
+										className="bg-transparent border-2 border-costumeBlue text-costumeBlue opacity-50 rounded-lg p-2"
+									>
+										<ArrowsClockwise size={15} weight="bold" />
+									</Button>
+									<FilterMenu title={"kelas"}>
+										<MenuItem className="flex flex-row items-center gap-2 cursor-default">
+											{" "}
+											<input
+												type="radio"
+												name="courseType"
+												value="Free"
+												checked={
+													courseFilter.courseType == "Free" ? true : false
+												}
+												className="cursor-pointer"
+												onChange={handleInputChange}
+											/>
+											<span>Free</span>
+										</MenuItem>
+										<MenuItem className="flex flex-row items-center gap-2 cursor-default">
+											{" "}
+											<input
+												type="radio"
+												name="courseType"
+												value="Premium"
+												checked={
+													courseFilter.courseType == "Premium" ? true : false
+												}
+												onChange={handleInputChange}
+												className="cursor-pointer"
+											/>
+											<span>Premium</span>
+										</MenuItem>
+									</FilterMenu>
 
-                <FilterMenu title={"level"}>
-                  <MenuItem className="flex flex-row items-center gap-2 cursor-default">
-                    <input
-                      type="radio"
-                      name="level"
-                      value="Beginner"
-                      checked={courseFilter.level == "Beginner" ? true : false}
-                      onChange={handleInputChange}
-                      className="cursor-pointer"
-                    />
-                    <span>Beginner</span>
-                  </MenuItem>
-                  <MenuItem className="flex flex-row items-center gap-2 cursor-default">
-                    <input
-                      type="radio"
-                      name="level"
-                      value="Intermediate"
-                      checked={
-                        courseFilter.level == "Intermediate" ? true : false
-                      }
-                      onChange={handleInputChange}
-                      className="cursor-pointer"
-                    />
-                    <span>Intermediate</span>
-                  </MenuItem>
-                  <MenuItem className="flex flex-row items-center gap-2 cursor-default">
-                    <input
-                      type="radio"
-                      name="level"
-                      value="Advance"
-                      checked={courseFilter.level == "Advance" ? true : false}
-                      onChange={handleInputChange}
-                      className="cursor-pointer"
-                    />
-                    <span>Advance</span>
-                  </MenuItem>
-                </FilterMenu>
+									<FilterMenu title={"level"}>
+										<MenuItem className="flex flex-row items-center gap-2 cursor-default">
+											<input
+												type="radio"
+												name="level"
+												value="Beginner"
+												checked={
+													courseFilter.level == "Beginner" ? true : false
+												}
+												onChange={handleInputChange}
+												className="cursor-pointer"
+											/>
+											<span>Beginner</span>
+										</MenuItem>
+										<MenuItem className="flex flex-row items-center gap-2 cursor-default">
+											<input
+												type="radio"
+												name="level"
+												value="Intermediate"
+												checked={
+													courseFilter.level == "Intermediate" ? true : false
+												}
+												onChange={handleInputChange}
+												className="cursor-pointer"
+											/>
+											<span>Intermediate</span>
+										</MenuItem>
+										<MenuItem className="flex flex-row items-center gap-2 cursor-default">
+											<input
+												type="radio"
+												name="level"
+												value="Advance"
+												checked={courseFilter.level == "Advance" ? true : false}
+												onChange={handleInputChange}
+												className="cursor-pointer"
+											/>
+											<span>Advance</span>
+										</MenuItem>
+									</FilterMenu>
 
-                <FilterMenu title={"kategori"}>
-                  {" "}
-                  {category.map((category) => (
-                    <MenuItem
-                      className="flex flex-row items-center gap-2 cursor-default"
-                      key={category.id}
-                    >
-                      <input
-                        type="checkbox"
-                        name="categoryIds"
-                        value={category.id}
-                        onClick={handleInputChange}
-                        checked={courseFilter.categoryIds.includes(category.id)}
-                        className="cursor-pointer"
-                      />
-                      <span>{category.name}</span>
-                    </MenuItem>
-                  ))}
-                </FilterMenu>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+									<FilterMenu title={"kategori"}>
+										{" "}
+										{category.map((category) => (
+											<MenuItem
+												className="flex flex-row items-center gap-2 cursor-default"
+												key={category.id}
+											>
+												<input
+													type="checkbox"
+													name="categoryIds"
+													value={category.id}
+													onClick={handleInputChange}
+													checked={courseFilter.categoryIds.includes(
+														category.id
+													)}
+													className="cursor-pointer"
+												/>
+												<span>{category.name}</span>
+											</MenuItem>
+										))}
+									</FilterMenu>
+								</div>
+							</MenuList>
+						</Menu>
+						<button>
+							<MagnifyingGlass
+								size={24}
+								className="text-costumeBlue"
+								weight="bold"
+							/>
+						</button>
+					</div>
+				</div>
+				{/* <AnimatePresence>
+					{filterVisible && (
+						<motion.div
+							initial={{ y: -10 }}
+							animate={{ y: 0 }}
+							exit={{ opacity: 0 }}
+						>
+							<div className="flex flex-row-reverse justify-start items-center gap-3 m-3 ">
+								<Button
+									onClick={(e) => {
+										e.preventDefault()
+										resetCourseFilter()
+									}}
+									className="bg-transparent border-2 border-costumeBlue text-costumeBlue opacity-50 rounded-lg p-2"
+								>
+									<ArrowsClockwise size={15} weight="bold" />
+								</Button>
+								<FilterMenu title={"kelas"}>
+									<MenuItem className="flex flex-row items-center gap-2 cursor-default">
+										{" "}
+										<input
+											type="radio"
+											name="courseType"
+											value="Free"
+											checked={courseFilter.courseType == "Free" ? true : false}
+											className="cursor-pointer"
+											onChange={handleInputChange}
+										/>
+										<span>Free</span>
+									</MenuItem>
+									<MenuItem className="flex flex-row items-center gap-2 cursor-default">
+										{" "}
+										<input
+											type="radio"
+											name="courseType"
+											value="Premium"
+											checked={
+												courseFilter.courseType == "Premium" ? true : false
+											}
+											onChange={handleInputChange}
+											className="cursor-pointer"
+										/>
+										<span>Premium</span>
+									</MenuItem>
+								</FilterMenu>
 
-        <div className="mt-3 overflow-x-auto">
-          <table className="w-full border border-separate">
-            <thead className="bg-blue-100 border-b-2 border-gray-200 ">
-              <tr>
-                <td className="p-3 text-sm font-semibold tracking-wide text-left">
-                  Kategori
-                </td>
-                <td className="p-3 text-sm font-semibold tracking-wide text-left">
-                  Nama Kelas
-                </td>
-                <td className="p-3 text-sm font-semibold tracking-wide text-left">
-                  Tipe Kelas
-                </td>
-                <td className="p-3 text-sm font-semibold tracking-wide text-left">
-                  Level
-                </td>
-                <td className="p-3 text-sm font-semibold tracking-wide text-left">
-                  Harga Kelas
-                </td>
-                <td className="p-3 text-sm font-semibold tracking-wide text-center">
-                  Aksi
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {currentItems.map((item) => (
-                <tr key={item.id}>
-                  <td className="p-3 text-sm text-gray-700 ">
-                    {item.Category.name}
-                  </td>
-                  <td className="p-3 text-sm text-gray-700 ">{item.title}</td>
-                  <td className="p-3 text-sm text-gray-700 ">
-                    {item.courseType}
-                  </td>
-                  <td className="p-3 text-sm text-gray-700 ">{item.level}</td>
-                  <td className="p-3 text-sm text-gray-700 ">
-                    {priceFormatter.format(item.price)}
-                  </td>
-                  <td>
-                    <div className="flex gap-2 items-center justify-center">
-                      <Link
-                        to={`/kelola-course/${item.id}`}
-                        className="bg-costumeBlue text-white px-2 py-1 rounded-lg text-center font-semibold"
-                      >
-                        Kelola
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(item.id)}
-                        className="rounded-lg px-2 py-1 bg-red-600 text-white font-semibold"
-                      >
-                        Hapus
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+								<FilterMenu title={"level"}>
+									<MenuItem className="flex flex-row items-center gap-2 cursor-default">
+										<input
+											type="radio"
+											name="level"
+											value="Beginner"
+											checked={courseFilter.level == "Beginner" ? true : false}
+											onChange={handleInputChange}
+											className="cursor-pointer"
+										/>
+										<span>Beginner</span>
+									</MenuItem>
+									<MenuItem className="flex flex-row items-center gap-2 cursor-default">
+										<input
+											type="radio"
+											name="level"
+											value="Intermediate"
+											checked={
+												courseFilter.level == "Intermediate" ? true : false
+											}
+											onChange={handleInputChange}
+											className="cursor-pointer"
+										/>
+										<span>Intermediate</span>
+									</MenuItem>
+									<MenuItem className="flex flex-row items-center gap-2 cursor-default">
+										<input
+											type="radio"
+											name="level"
+											value="Advance"
+											checked={courseFilter.level == "Advance" ? true : false}
+											onChange={handleInputChange}
+											className="cursor-pointer"
+										/>
+										<span>Advance</span>
+									</MenuItem>
+								</FilterMenu>
 
-        <div className="flex justify-center mt-4">
-          {course.length > itemsPerPage && (
-            <Pagination
-              currentPage={currentPage}
-              itemsPerPage={itemsPerPage}
-              totalItems={course.length}
-              paginate={paginate}
-            />
-          )}
-        </div>
-      </div>
-      <Modal>
-        <AddCourse />
-      </Modal>
-    </>
-  );
+								<FilterMenu title={"kategori"}>
+									{" "}
+									{category.map((category) => (
+										<MenuItem
+											className="flex flex-row items-center gap-2 cursor-default"
+											key={category.id}
+										>
+											<input
+												type="checkbox"
+												name="categoryIds"
+												value={category.id}
+												onClick={handleInputChange}
+												checked={courseFilter.categoryIds.includes(category.id)}
+												className="cursor-pointer"
+											/>
+											<span>{category.name}</span>
+										</MenuItem>
+									))}
+								</FilterMenu>
+							</div>
+						</motion.div>
+					)}
+				</AnimatePresence> */}
+
+				<div className="mt-3 overflow-x-auto">
+					<table className="w-full border border-separate">
+						<thead className="bg-blue-100 border-b-2 border-gray-200 ">
+							<tr>
+								<td className="p-3 text-sm font-semibold tracking-wide text-left">
+									Kategori
+								</td>
+								<td className="p-3 text-sm font-semibold tracking-wide text-left">
+									Nama Kelas
+								</td>
+								<td className="p-3 text-sm font-semibold tracking-wide text-left">
+									Tipe Kelas
+								</td>
+								<td className="p-3 text-sm font-semibold tracking-wide text-left">
+									Level
+								</td>
+								<td className="p-3 text-sm font-semibold tracking-wide text-left">
+									Harga Kelas
+								</td>
+								<td className="p-3 text-sm font-semibold tracking-wide text-center">
+									Aksi
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							{currentItems.map((item) => (
+								<tr key={item.id}>
+									<td className="p-3 text-sm text-gray-700 ">
+										{item.Category.name}
+									</td>
+									<td className="p-3 text-sm text-gray-700 ">{item.title}</td>
+									<td className="p-3 text-sm text-gray-700 ">
+										{item.courseType}
+									</td>
+									<td className="p-3 text-sm text-gray-700 ">{item.level}</td>
+									<td className="p-3 text-sm text-gray-700 ">
+										{priceFormatter.format(item.price)}
+									</td>
+									<td>
+										<div className="flex gap-2 items-center justify-center">
+											<Link
+												to={`/kelola-course/${item.id}`}
+												className="bg-costumeBlue text-white px-2 py-1 rounded-lg text-center font-semibold"
+											>
+												Kelola
+											</Link>
+											<button
+												onClick={() => handleDelete(item.id)}
+												className="rounded-lg px-2 py-1 bg-red-600 text-white font-semibold"
+											>
+												Hapus
+											</button>
+										</div>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+
+				<div className="flex justify-center mt-4">
+					{course.length > itemsPerPage && (
+						<Pagination
+							currentPage={currentPage}
+							itemsPerPage={itemsPerPage}
+							totalItems={course.length}
+							paginate={paginate}
+						/>
+					)}
+				</div>
+			</div>
+			<Modal>
+				<AddCourse />
+			</Modal>
+		</>
+	)
 }
