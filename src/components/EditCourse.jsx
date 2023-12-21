@@ -7,6 +7,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { loadingState } from "../atom/loadingAtom";
 import { triggerDataUpdateState } from "../atom/formAtom";
 import { swalFireConfirm, swalFireResult } from "../libs/swalFire";
+import { coursePriceState } from "../atom/courseAtom";
 
 export default function EditCourse() {
   const [courseData, setCourseData] = useState(null);
@@ -19,6 +20,7 @@ export default function EditCourse() {
   const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
     triggerDataUpdateState
   );
+  const setCoursePrice = useSetRecoilState(coursePriceState);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -38,6 +40,7 @@ export default function EditCourse() {
         const data = await getCoursesById(id);
         courseRef.current = data;
         setCourseData(data);
+        setCoursePrice(data.price);
       } catch (error) {
         console.error("Error fetching course data:", error);
       }
@@ -158,6 +161,7 @@ export default function EditCourse() {
                           name="price"
                           value={courseData.price}
                           onChange={handleInputChange}
+                          onWheel={(e) => e.target.blur()}
                         />
                       </label>
                     </div>

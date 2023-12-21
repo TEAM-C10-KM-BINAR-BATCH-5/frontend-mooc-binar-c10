@@ -6,3 +6,8 @@ export const courseFilterState = atom({
     categoryIds: [],
   },
 });
+
+export const coursePriceState = atom({
+  key: "coursePriceState",
+  default: 0,
+});
