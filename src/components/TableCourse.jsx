@@ -92,8 +92,7 @@ export default function TableCourse() {
       );
       if (result.isConfirmed) {
         const token = localStorage.getItem("token");
-
-        const response = await axios.delete(
+        await axios.delete(
           `${import.meta.env.VITE_API_BASE_URL}/course/${id}`,
           {
             headers: {
@@ -101,7 +100,6 @@ export default function TableCourse() {
             },
           }
         );
-        console.log("Item berhasil dihapus:", response.data);
         setTriggerDataUpdate(!triggerDataUpdate);
         swalFireResult(
           "Berhasil!",

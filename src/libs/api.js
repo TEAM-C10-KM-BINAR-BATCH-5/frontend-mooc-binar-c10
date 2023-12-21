@@ -77,6 +77,45 @@ export const createModule = async (data) => {
   }
 };
 
+export const editModule = async (data, id) => {
+  try {
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_BASE_URL}/module/${id}`,
+      {
+        title: data.title,
+        isLocked: data.isLocked,
+        courseId: data.courseId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export const deleteModule = async (id) => {
+  try {
+    console.log(id);
+    const response = await axios.delete(
+      `${import.meta.env.VITE_API_BASE_URL}/module/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const createVideo = async (data) => {
   try {
     const response = await axios.post(
@@ -97,6 +136,41 @@ export const createVideo = async (data) => {
     return response.data.data;
   } catch (error) {
     console.log(error);
+    return error;
+  }
+};
+
+export const editVideo = async (data, id) => {
+  try {
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_BASE_URL}/video//${id}`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const deleteVideo = async (id) => {
+  try {
+    console.log(id);
+    const response = await axios.delete(
+      `${import.meta.env.VITE_API_BASE_URL}/video/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
     return error;
   }
 };
