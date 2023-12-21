@@ -117,6 +117,7 @@ export default function AccordionComponent({
               onKeyDown={(e) => {
                 handleKeyDown(e);
               }}
+              autoFocus={edit}
               className="w-full border-2 p-2 border-gray-400 rounded-lg text-sm lg:text-base"
             />
           </AccordionHeader>

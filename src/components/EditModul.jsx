@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import AccordionComponent from "./AccordionComponent.1";
+import AccordionComponent from "./AccordionComponent";
 import { createModule, createVideo, getModulesByCourseId } from "../libs/api";
 import { useParams } from "react-router-dom";
 import EditVideo from "./EditVideo";
-import { FloppyDisk } from "@phosphor-icons/react";
 import { triggerDataUpdateState } from "../atom/formAtom";
 import { useRecoilState } from "recoil";
 import { coursePriceState } from "../atom/courseAtom";
