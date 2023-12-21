@@ -15,6 +15,7 @@ import { triggerDataUpdateState } from "../atom/formAtom";
 import { courseFilterState } from "../atom/courseAtom";
 import {
   Button,
+  Input,
   Menu,
   MenuHandler,
   MenuItem,
@@ -28,10 +29,13 @@ import AddCourse from "./ModalContent/AddCourse";
 import Pagination from "./Pagination";
 import { priceFormatter } from "../../utils/PriceFormater";
 import { swalFireConfirm, swalFireResult } from "../libs/swalFire";
+import SearchButton from "./SearchButton";
 
 export default function TableCourse() {
   const setShowModal = useSetRecoilState(modalState);
   const [course, setCourse] = useState([]);
+  const [search, setSearch] = useState([]);
+
   const [category, setCategory] = useState([]);
   const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
     triggerDataUpdateState
@@ -71,6 +75,7 @@ export default function TableCourse() {
     const fetchCourses = async () => {
       const coursesData = await getCourses(courseFilter);
       setCourse(coursesData);
+      setSearch(coursesData);
     };
     fetchCourses();
   }, [triggerDataUpdate, courseFilter]);
@@ -115,13 +120,29 @@ export default function TableCourse() {
     }
   };
 
+  //search
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+    Search(searchTerm);
+  };
+
+  const Search = (searchTerm) => {
+    const filteredResults = course.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm)
+    );
+    setSearch(filteredResults);
+  };
+
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = course.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = search.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -257,13 +278,17 @@ export default function TableCourse() {
                 </div>
               </MenuList>
             </Menu>
-            <button>
-              <MagnifyingGlass
-                size={24}
-                className="text-costumeBlue"
-                weight="bold"
+            <SearchButton>
+              <Input
+                value={searchTerm}
+                onChange={handleSearchChange}
+                label="Search"
+                color="indigo"
+                containerProps={{
+                  className: "mb-1",
+                }}
               />
-            </button>
+            </SearchButton>
           </div>
         </div>
         {/* <AnimatePresence>
@@ -435,11 +460,11 @@ export default function TableCourse() {
         </div>
 
         <div className="flex justify-center mt-4">
-          {course.length > itemsPerPage && (
+          {search.length > itemsPerPage && (
             <Pagination
               currentPage={currentPage}
               itemsPerPage={itemsPerPage}
-              totalItems={course.length}
+              totalItems={search.length}
               paginate={paginate}
             />
           )}

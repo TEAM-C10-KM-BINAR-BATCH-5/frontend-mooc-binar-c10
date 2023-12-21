@@ -1,15 +1,31 @@
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { Funnel } from "@phosphor-icons/react/dist/ssr";
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { ArrowsClockwise, MagnifyingGlass } from "@phosphor-icons/react";
 import { getDataTransaction } from "../libs/api";
 import { formatDate } from "../../utils/TimeFormater";
 import { triggerDataUpdateState } from "../atom/formAtom";
 import Pagination from "./Pagination";
+import FilterMenu from "./FilterMenu";
+import {
+  Button,
+  Input,
+  Menu,
+  MenuHandler,
+  MenuItem,
+  MenuList,
+} from "@material-tailwind/react";
+import FilterButton from "./FilterButton";
+import { filterVisibleState } from "../atom/filterAtom";
+import { courseFilterState } from "../atom/courseAtom";
+import SearchButton from "./SearchButton";
 
 function Table() {
   const [triggerDataUpdate] = useRecoilState(triggerDataUpdateState);
   const [transaction, setTransaction] = useState([]);
+  const [search, setSearch] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
 
@@ -17,6 +33,7 @@ function Table() {
     const fetchDataTransaction = async () => {
       const dataTransaction = await getDataTransaction();
       setTransaction(dataTransaction);
+      setSearch(dataTransaction);
     };
     fetchDataTransaction();
   }, [triggerDataUpdate]);
@@ -24,9 +41,38 @@ function Table() {
   // pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = transaction.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = search.slice(indexOfFirstItem, indexOfLastItem);
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // const Search = (event) => {
+  //   const searchTerm = event.target.value.toLowerCase();
+  //   setSearch(
+  //     transaction.filter(
+  //       (order) =>
+  //         order.User.name.toLowerCase().includes(searchTerm) ||
+  //         order.Course.title.toLowerCase().includes(searchTerm)
+  //     )
+  //   );
+  // };
+
+  const handleSearchChange = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+    Search(searchTerm);
+  };
+
+  const Search = (searchTerm) => {
+    const filteredResults = transaction.filter(
+      (order) =>
+        order.User.name.toLowerCase().includes(searchTerm) ||
+        order.Course.title.toLowerCase().includes(searchTerm)
+    );
+    setSearch(filteredResults);
+  };
+
+  const resetCourseFilter = useResetRecoilState(courseFilterState);
+  const [filterVisible] = useRecoilState(filterVisibleState);
 
   return (
     <>
@@ -36,24 +82,159 @@ function Table() {
             <strong>Status Pembayaran</strong>
           </div>
           <div className=" flex flex-cols justify-end gap-2">
-            <button
-              type="button"
-              className="border border-costumeBlue border-solid rounded-xl flex items-center px-2 p-0.5"
-            >
-              <Funnel
-                size={24}
-                weight="bold"
-                className="mr-2 text-costumeBlue"
+            <Menu open={filterVisible}>
+              <MenuHandler>
+                <div>
+                  <FilterButton />
+                </div>
+              </MenuHandler>
+              <MenuList className="border border-gray-400 p-1">
+                <div className="flex flex-row-reverse justify-start items-center gap-3 m-3">
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      resetCourseFilter();
+                    }}
+                    className="bg-transparent border-2 border-costumeBlue text-costumeBlue opacity-50 rounded-lg p-2"
+                  >
+                    <ArrowsClockwise size={15} weight="bold" />
+                  </Button>
+                  <FilterMenu title={"Metode"}>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="radio"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>Qris</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="radio"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>Midtrans</span>
+                    </MenuItem>
+                  </FilterMenu>
+
+                  <FilterMenu title={"Status"}>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>authorize</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>capture</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>deny</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>pending</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>cencel</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>refund</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>partial_refund</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>chargeback</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>partial_chargeback</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>expire</span>
+                    </MenuItem>
+                    <MenuItem className="flex flex-row items-center gap-2 cursor-default">
+                      {" "}
+                      <input
+                        type="checkbox"
+                        name="courseType"
+                        className="cursor-pointer"
+                      />
+                      <span>Failure</span>
+                    </MenuItem>
+                  </FilterMenu>
+                </div>
+              </MenuList>
+            </Menu>
+            <SearchButton>
+              <Input
+                value={searchTerm}
+                onChange={handleSearchChange}
+                label="Search"
+                color="indigo"
+                containerProps={{
+                  className: "mb-1",
+                }}
               />
-              <span className="font-bold text-costumeBlue">Filter</span>
-            </button>
-            <button>
-              <MagnifyingGlass
-                size={24}
-                className="text-costumeBlue"
-                weight="bold"
-              />
-            </button>
+            </SearchButton>
           </div>
         </div>
         <div className="mt-3 overflow-x-auto">
@@ -61,7 +242,7 @@ function Table() {
             <thead className="bg-blue-100 border-b-2 border-gray-200 ">
               <tr>
                 <td className="p-3 text-sm font-semibold tracking-wide text-left">
-                  ID
+                  Username
                 </td>
                 <td className="p-3 text-sm font-semibold tracking-wide text-left">
                   Kategori
@@ -84,7 +265,7 @@ function Table() {
               {currentItems?.map((order) => (
                 <tr key={order.id}>
                   <td className="p-3 text-sm text-gray-700 ">
-                    {order?.User?.name}
+                    {order.User.name}
                   </td>
                   <td className="p-3 text-sm text-gray-700 ">
                     {order.Course.Category.name}
