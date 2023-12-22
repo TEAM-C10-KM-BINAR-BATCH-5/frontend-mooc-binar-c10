@@ -216,8 +216,12 @@ export const editCourse = async (id, data) => {
         },
       }
     );
-    const modules = await getModulesByCourseId(id);
-    modules.map(async (module) => await editModule({}, module.id));
+    if (data.price <= 0) {
+      const modules = await getModulesByCourseId(id);
+      modules.map(
+        async (module) => await editModule({ isLocked: false }, module.id)
+      );
+    }
     return response.data;
   } catch (error) {
     throw error.response?.data;
