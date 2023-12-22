@@ -94,7 +94,7 @@ export default function AccordionComponent({
   return (
     <Accordion
       open={open === index}
-      className={`mb-2 rounded-lg border border-blue-gray-300 px-4 w-full ${
+      className={`mb-2 rounded-lg border border-blue-gray-300 px-2 md:px-4 w-full ${
         open === index ? "border-costumeBlue border-2" : ""
       }`}
     >
