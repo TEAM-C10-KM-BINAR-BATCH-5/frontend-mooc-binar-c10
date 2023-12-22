@@ -16,7 +16,6 @@ import {
   MenuList,
 } from "@material-tailwind/react";
 import FilterButton from "./FilterButton";
-import { filterVisibleState } from "../atom/filterAtom";
 import { courseFilterState } from "../atom/courseAtom";
 import SearchButton from "./SearchButton";
 
@@ -32,6 +31,7 @@ function Table() {
   useEffect(() => {
     const fetchDataTransaction = async () => {
       const dataTransaction = await getDataTransaction();
+      console.log(dataTransaction);
       setTransaction(dataTransaction);
       setSearch(dataTransaction);
     };
@@ -72,7 +72,6 @@ function Table() {
   };
 
   const resetCourseFilter = useResetRecoilState(courseFilterState);
-  const [filterVisible] = useRecoilState(filterVisibleState);
 
   return (
     <>
@@ -82,7 +81,7 @@ function Table() {
             <strong>Status Pembayaran</strong>
           </div>
           <div className=" flex flex-cols justify-end gap-2">
-            <Menu open={filterVisible}>
+            <Menu>
               <MenuHandler>
                 <div>
                   <FilterButton />
@@ -265,7 +264,7 @@ function Table() {
               {currentItems?.map((order) => (
                 <tr key={order.id}>
                   <td className="p-3 text-sm text-gray-700 ">
-                    {order.User.name}
+                    {order.User?.name}
                   </td>
                   <td className="p-3 text-sm text-gray-700 ">
                     {order.Course.Category.name}

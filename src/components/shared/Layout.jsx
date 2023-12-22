@@ -10,7 +10,7 @@ export default function Layout() {
   useEffect(() => {
     const profile = async () => {
       try {
-        await getCurrentUser()
+        await getCurrentUser();
       } catch (err) {
         navigate("/login");
       }

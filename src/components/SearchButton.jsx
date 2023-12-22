@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Menu,
-  MenuHandler,
-  Button,
-  MenuList,
-  MenuItem,
-  Input,
-} from "@material-tailwind/react";
+import { Menu, MenuHandler, MenuList } from "@material-tailwind/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 
 export default function SearchButton({ children }) {
