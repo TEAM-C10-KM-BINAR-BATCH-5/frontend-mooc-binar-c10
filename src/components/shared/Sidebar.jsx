@@ -30,7 +30,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="bg-costumeBlue w-full flex flex-col items-center md:w-56 itransition-all py-2 rounded-t-lg md:rounded-none">
+    <div className="bg-costumeBlue  w-full flex flex-col items-center md:w-56 itransition-all py-2 rounded-t-lg md:rounded-none">
       <div className="hidden md:flex  items-center justify-center py-10">
         <img src={logo} className="w-10 md:w-20" alt="" />
       </div>

@@ -21,6 +21,7 @@ export const addModuleFormState = atom({
   default: [
     {
       title: "",
+      isLocked: "false",
       videos: [
         {
           videoNo: 1,

@@ -50,6 +50,7 @@ export default function AccordionComponent({
 
   const handleEditTitle = async () => {
     try {
+      setEdit(false);
       if (type == "module") {
         await editModule({ title: currentTitle }, id);
       } else if (type == "video") {
@@ -82,8 +83,7 @@ export default function AccordionComponent({
   const handleKeyDown = (e) => {
     try {
       if (e.key === "Enter") {
-        handleEditTitle();
-        setEdit(false);
+        e.target.blur();
       }
     } catch (error) {
       console.log(error);
@@ -114,6 +114,7 @@ export default function AccordionComponent({
               type="text"
               value={currentTitle}
               onChange={(e) => setCurrentTitle(e.target.value)}
+              onBlur={handleEditTitle}
               onKeyDown={(e) => {
                 handleKeyDown(e);
               }}

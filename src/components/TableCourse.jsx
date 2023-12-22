@@ -96,11 +96,7 @@ export default function TableCourse() {
       if (result.isConfirmed) {
         await deleteCourse(id);
         setTriggerDataUpdate(!triggerDataUpdate);
-        swalFireResult(
-          "Berhasil!",
-          "Data anda telah berhasil dihapus",
-          "success"
-        );
+        swalFireResult("Berhasil!", "Berhasil menghapus data", "success");
       }
     } catch (error) {
       console.error("Gagal menghapus item:", error);
@@ -311,7 +307,7 @@ export default function TableCourse() {
                   </td>
                   <td className="p-3 text-sm text-gray-700 ">{item.title}</td>
                   <td
-                    className={`p-3 text-md font-bold text-gray-700 ${
+                    className={`p-3 text-md font-bold text-gray-700 text-sm ${
                       item.courseType === "Free"
                         ? "text-green-500"
                         : "text-indigo-500"

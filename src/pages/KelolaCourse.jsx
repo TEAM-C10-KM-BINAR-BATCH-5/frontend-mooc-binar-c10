@@ -16,14 +16,17 @@ export default function KelolaCourse() {
   return (
     <>
       {isLoading && <LoadingModal />}
-      <div className="grid grid-cols-1  gap-4 ">
-        <div
-          className="flex flex-row gap-2 items-center rounded-full hover:bg-gray-200 w-fit cursor-pointer p-3 font-bold"
-          onClick={goBack}
-        >
-          <CaretLeft />
-          <p className="hidden md:block"> Kembali </p>
-        </div>
+      <div
+        className="flex flex-row gap-2 items-center rounded-full hover:bg-gray-300 w-fit cursor-pointer p-3 font-bold"
+        onClick={goBack}
+      >
+        <CaretLeft />
+        <p className="hidden md:block"> Kembali </p>
+      </div>
+      <h1 className="text-2xl md:text-3xl font-bold text-center text-costumeBlue mb-3">
+        Detail Kelas
+      </h1>
+      <div className="bg-white shadow-lg rounded-lg p-3 border border-gray-400">
         <div className="mb-3">
           <EditCourse />
         </div>

@@ -1,15 +1,11 @@
 const checkObj = (data) => {
   let check = [];
-  if (data.price) {
-    check = Object.values(data).some(
-      (value) => value === "" || value === null || value === undefined
-    );
-  } else {
-    check = Object.values(data).some(
-      (value) =>
-        value === "" || value === "0" || value === null || value === undefined
-    );
-  }
+
+  check = Object.values(data).some(
+    data.price
+      ? (value) => value === "" || value === null
+      : (value) => value === "" || value === "0" || value === null
+  );
 
   return check;
 };

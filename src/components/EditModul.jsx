@@ -54,46 +54,46 @@ export default function EditModul() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      {/* ... (other JSX code) */}
-      <div className="p-5 shadow-lg rounded-lg w-full  bg-white">
-        {modules &&
-          modules.map((data, index) => (
-            <AccordionComponent
-              id={data.id}
-              title={data.title}
-              index={data.id}
-              key={data.id}
-              isLocked={data.isLocked}
-              price={coursePrice}
-              type="module"
-            >
-              {data.Videos.map((video) => (
-                <AccordionComponent
-                  id={video.id}
-                  title={video.title}
-                  index={video.id}
-                  key={video.title}
-                  type="video"
-                >
-                  <EditVideo video={video} />
-                </AccordionComponent>
-              ))}
-              <button
-                className="p-2 border-2 border-costumeBlue text-costumeBlue rounded-lg opacity-50 text-sm"
-                onClick={() => handleAddVideo(index, data.id)}
+    <div className="flex flex-col gap-3 items-start justify-center p-4">
+      <h1 className="text-costumeBlue text-2xl md:text-3xl font-bold mb-3">
+        Modul
+      </h1>
+      {modules &&
+        modules.map((data, index) => (
+          <AccordionComponent
+            id={data.id}
+            title={data.title}
+            index={data.id}
+            key={data.id}
+            isLocked={data.isLocked}
+            price={coursePrice}
+            type="module"
+          >
+            {data.Videos.map((video) => (
+              <AccordionComponent
+                id={video.id}
+                title={video.title}
+                index={video.id}
+                key={video.title}
+                type="video"
               >
-                + Tambah Video
-              </button>
-            </AccordionComponent>
-          ))}
-        <button
-          className="p-2 border-2 border-costumeBlue text-costumeBlue rounded-lg opacity-50 text-sm"
-          onClick={handleAddModule}
-        >
-          + Tambah Modul
-        </button>
-      </div>
+                <EditVideo video={video} />
+              </AccordionComponent>
+            ))}
+            <button
+              className="p-2 border-2 border-costumeBlue text-costumeBlue rounded-lg opacity-50 text-sm"
+              onClick={() => handleAddVideo(index, data.id)}
+            >
+              + Tambah Video
+            </button>
+          </AccordionComponent>
+        ))}
+      <button
+        className="p-2 border-2 border-costumeBlue text-costumeBlue rounded-lg opacity-50 text-sm"
+        onClick={handleAddModule}
+      >
+        + Tambah Modul
+      </button>
     </div>
   );
 }
