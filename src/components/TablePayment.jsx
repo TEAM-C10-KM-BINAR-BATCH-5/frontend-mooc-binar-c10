@@ -227,7 +227,7 @@ function Table() {
               <Input
                 value={searchTerm}
                 onChange={handleSearchChange}
-                label="Search"
+                label="Search by user & class "
                 color="indigo"
                 containerProps={{
                   className: "mb-1",
@@ -272,7 +272,19 @@ function Table() {
                   <td className="p-3 text-sm text-gray-700 ">
                     {order.Course.title}
                   </td>
-                  <td className="p-3 text-sm text-gray-700 ">{order.status}</td>
+                  <td
+                    className={`p-3 text-md font-bold text-gray-700 ${
+                      order.status === "pending"
+                        ? "text-yellow-800"
+                        : order.status === "settlement" || "capture"
+                        ? "text-green-600"
+                        : order.status === "failed"
+                        ? "text-red-600"
+                        : "text-black"
+                    }`}
+                  >
+                    {order.status}
+                  </td>
                   <td className="p-3 text-sm text-gray-700 ">
                     {order.payment_type}
                   </td>
@@ -286,11 +298,11 @@ function Table() {
         </div>
 
         <div className="flex justify-center mt-4">
-          {transaction.length > itemsPerPage && (
+          {search.length > itemsPerPage && (
             <Pagination
               currentPage={currentPage}
               itemsPerPage={itemsPerPage}
-              totalItems={transaction.length}
+              totalItems={search.length}
               paginate={paginate}
             />
           )}

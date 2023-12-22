@@ -136,8 +136,8 @@ export default function TableCourse() {
   return (
     <>
       <div className="px-4 pt-3 pb-4 rounded-sm flex-1 whitespace-nowrap">
-        <div className="flex  flex-row justify-between gap-2">
-          <div className="text-base sm:text-xl">
+        <div className="flex flex-row justify-between gap-2">
+          <div className="text-base sm:text-lg">
             <strong>Kelola Course</strong>
           </div>
           <div className="flex flex-row justify-end gap-2">
@@ -279,7 +279,6 @@ export default function TableCourse() {
             </SearchButton>
           </div>
         </div>
-
         <div className="mt-3 overflow-x-auto">
           <table className="w-full border border-separate">
             <thead className="bg-blue-100 border-b-2 border-gray-200 ">
@@ -311,7 +310,13 @@ export default function TableCourse() {
                     {item.Category.name}
                   </td>
                   <td className="p-3 text-sm text-gray-700 ">{item.title}</td>
-                  <td className="p-3 text-sm text-gray-700 ">
+                  <td
+                    className={`p-3 text-md font-bold text-gray-700 ${
+                      item.courseType === "Free"
+                        ? "text-green-500"
+                        : "text-indigo-500"
+                    }`}
+                  >
                     {item.courseType}
                   </td>
                   <td className="p-3 text-sm text-gray-700 ">{item.level}</td>
