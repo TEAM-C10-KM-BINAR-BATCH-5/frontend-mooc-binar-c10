@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { editCourse, getCategory, getCoursesById } from "../libs/api";
+import {
+  editCourse,
+  editModule,
+  getCategory,
+  getCoursesById,
+  getModulesByCourseId,
+} from "../libs/api";
 import { FloppyDisk, PencilSimpleLine } from "@phosphor-icons/react";
 import { shallowEqual } from "shallow-equal";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -64,7 +70,13 @@ export default function EditCourse() {
 
       if (result.isConfirmed) {
         setIsLoading(true);
-        const response = await editCourse(id, courseData);
+        await editCourse(id, courseData);
+        if (courseData.price <= 0) {
+          const modules = await getModulesByCourseId(id);
+          modules.map(
+            async (module) => await editModule({ isLocked: false }, module.id)
+          );
+        }
 
         swalFireResult("Berhasil!", "Berhasil menyimpan perubahan", "success");
         setTriggerDataUpdate(!triggerDataUpdate);
