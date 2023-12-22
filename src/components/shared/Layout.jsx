@@ -2,7 +2,7 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
+import { getCurrentUser } from "../../libs/api";
 
 export default function Layout() {
   const navigate = useNavigate();
@@ -10,11 +10,7 @@ export default function Layout() {
   useEffect(() => {
     const profile = async () => {
       try {
-        await axios.get(`${import.meta.env.VITE_API_BASE_URL}/auth/profile`, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        });
+        await getCurrentUser()
       } catch (err) {
         navigate("/login");
       }
