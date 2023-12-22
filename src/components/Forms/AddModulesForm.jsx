@@ -156,11 +156,7 @@ export default function AddModuleForm() {
                 {parseInt(courseData.price) > 0 && (
                   <select
                     className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={
-                      parseInt(courseData.price) > 0
-                        ? formData[index].isLocked
-                        : "false"
-                    }
+                    value={formData[index].isLocked}
                     name="isLocked"
                     onChange={(e) => handleInputChange(e, index)}
                   >

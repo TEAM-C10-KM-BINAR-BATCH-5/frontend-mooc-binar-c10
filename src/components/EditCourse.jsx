@@ -71,13 +71,6 @@ export default function EditCourse() {
       if (result.isConfirmed) {
         setIsLoading(true);
         await editCourse(id, courseData);
-        if (courseData.price <= 0) {
-          const modules = await getModulesByCourseId(id);
-          modules.map(
-            async (module) => await editModule({ isLocked: false }, module.id)
-          );
-        }
-
         swalFireResult("Berhasil!", "Berhasil menyimpan perubahan", "success");
         setTriggerDataUpdate(!triggerDataUpdate);
       }

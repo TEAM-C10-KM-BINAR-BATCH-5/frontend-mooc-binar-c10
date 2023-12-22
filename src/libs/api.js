@@ -206,8 +206,6 @@ export const createCourse = async (data) => {
 
 export const editCourse = async (id, data) => {
   try {
-    console.log(data);
-
     const response = await axios.patch(
       `${import.meta.env.VITE_API_BASE_URL}/course/${id}`,
       data,
@@ -218,7 +216,8 @@ export const editCourse = async (id, data) => {
         },
       }
     );
-    console.log(response);
+    const modules = await getModulesByCourseId(id);
+    modules.map(async (module) => await editModule({}, module.id));
     return response.data;
   } catch (error) {
     throw error.response?.data;
