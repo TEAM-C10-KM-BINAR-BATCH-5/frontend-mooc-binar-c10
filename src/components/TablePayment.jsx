@@ -276,9 +276,10 @@ function Table() {
                     className={`p-3 text-md font-bold text-gray-700 ${
                       order.status === "pending"
                         ? "text-yellow-800"
-                        : order.status === "settlement" || "capture"
+                        : order.status === "settlement" ||
+                          order.status === "capture"
                         ? "text-green-600"
-                        : order.status === "failed"
+                        : order.status === "failed" || order.status === "expire"
                         ? "text-red-600"
                         : "text-black"
                     }`}
