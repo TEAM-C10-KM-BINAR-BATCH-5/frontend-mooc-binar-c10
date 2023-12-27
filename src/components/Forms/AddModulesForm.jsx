@@ -128,13 +128,14 @@ export default function AddModuleForm() {
       <p className="py-5 text-costumeBlue font-bold text-2xl text-center">
         Tambah Modul
       </p>
-      <form className="w-full max-w-md xs:max-w-xs mx-auto relative">
-        {formData.map((_, index) => (
-          <AnimatePresence key={index}>
+      <div className="w-full max-w-md xs:max-w-xs mx-auto relative">
+        <AnimatePresence>
+          {formData.map((data, index) => (
             <motion.div
-              initial={{ x: 100 }}
+              initial={{ x: 500 }}
               animate={{ x: 0 }}
-              exit={{ x: 100 }}
+              exit={{ x: 600 }}
+              key={index}
             >
               <div className=" w-full shadow-md border-2 border-gray-300 p-5 rounded-lg m-3">
                 <p className="py-5 text-costumeBlue font-bold text-xl text-start">
@@ -148,7 +149,7 @@ export default function AddModuleForm() {
                     className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     placeholder="Masukan judul modul"
-                    defaultValue={formData[index].title}
+                    defaultValue={data.title}
                     name="title"
                     onChange={(e) => handleInputChange(e, index)}
                   />
@@ -156,7 +157,7 @@ export default function AddModuleForm() {
                 {parseInt(courseData.price) > 0 && (
                   <select
                     className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={formData[index].isLocked}
+                    value={data.isLocked}
                     name="isLocked"
                     onChange={(e) => handleInputChange(e, index)}
                   >
@@ -168,8 +169,8 @@ export default function AddModuleForm() {
                 <AddVideoForm moduleIndex={index} />
               </div>
             </motion.div>
-          </AnimatePresence>
-        ))}
+          ))}
+        </AnimatePresence>
 
         <div className="flex justify-end gap-3">
           <button
@@ -193,7 +194,7 @@ export default function AddModuleForm() {
         >
           Simpan
         </button>
-      </form>
+      </div>
     </div>
   );
 }

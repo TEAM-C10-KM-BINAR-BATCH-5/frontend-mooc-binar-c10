@@ -54,9 +54,9 @@ export default function AddVideoForm({ moduleIndex }) {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full" key={moduleIndex}>
       <div className="w-full max-w-md xs:max-w-xs mx-auto relative">
-        {formData[moduleIndex].videos.map((_, index) => (
+        {formData[moduleIndex]?.videos.map((_, index) => (
           <div key={index}>
             <p className="py-5 text-costumeBlue font-bold text-lg text-start">
               Video {index + 1}
@@ -104,7 +104,7 @@ export default function AddVideoForm({ moduleIndex }) {
           <button
             className="p-3 py-1 border-costumeBlue border-2 text-costumeBlue rounded-lg text-base opacity-50 disabled:hidden"
             onClick={(e) => handleDeleteLatestVideo(e, moduleIndex)}
-            disabled={formData[moduleIndex].videos.length === 1 ? true : false}
+            disabled={formData[moduleIndex]?.videos.length === 1 ? true : false}
           >
             - Kurangi Video
           </button>
