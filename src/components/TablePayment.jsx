@@ -16,7 +16,6 @@ import {
 	MenuList,
 } from "@material-tailwind/react"
 import FilterButton from "./FilterButton"
-import { courseFilterState } from "../atom/courseAtom"
 import SearchButton from "./SearchButton"
 import { paymentFilterState } from "../atom/paymentAtom"
 
@@ -51,7 +50,7 @@ function Table() {
 
 	useEffect(() => {
 		const fetchDataTransaction = async () => {
-			const dataTransaction = await getDataTransaction()
+			const dataTransaction = await getDataTransaction(paymentFilter)
 			console.log(dataTransaction)
 			setTransaction(dataTransaction)
 			setSearch(dataTransaction)
@@ -85,29 +84,11 @@ function Table() {
 
 	const handleInputChange = (e) => {
 		e.preventDefault()
-		const { name, value, checked } = e.target
-		if (name === "status") {
-			// Handle checkboxes for categories
-			if (checked) {
-				// If checkbox is checked, add the category ID to the array
-				setPaymentFilter((prev) => ({
-					...prev,
-					[name]: [...prev[name], value],
-				}))
-			} else {
-				// If checkbox is unchecked, remove the category ID from the array
-				setPaymentFilter((prev) => ({
-					...prev,
-					[name]: prev[name].filter((id) => id !== value),
-				}))
-			}
-		} else {
-			// Handle other input changes
-			setPaymentFilter((prev) => ({
-				...prev,
-				[name]: value,
-			}))
-		}
+		const { name, value } = e.target
+		setPaymentFilter((prev) => ({
+			...prev,
+			[name]: value,
+		}))
 	}
 
 	const Search = (searchTerm) => {
@@ -151,7 +132,7 @@ function Table() {
 													{" "}
 													<input
 														type="radio"
-														name="method"
+														name="paymentType"
 														value={method}
 														className="cursor-pointer"
 														checked={
@@ -172,11 +153,13 @@ function Table() {
 													{" "}
 													<input
 														value={status}
-														type="checkbox"
+														type="radio"
 														name="status"
 														className="cursor-pointer"
 														onClick={handleInputChange}
-														checked={paymentFilter.status.includes(status)}
+														checked={
+															paymentFilter.status == status ? true : false
+														}
 													/>
 													<span>{status}</span>
 												</MenuItem>
