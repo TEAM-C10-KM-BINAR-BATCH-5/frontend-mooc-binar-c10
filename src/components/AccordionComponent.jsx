@@ -7,9 +7,10 @@ import { LockKey, LockKeyOpen, Trash } from "@phosphor-icons/react";
 import { PencilLine } from "@phosphor-icons/react/dist/ssr";
 import React, { useState } from "react";
 import { deleteModule, deleteVideo, editModule, editVideo } from "../libs/api";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { triggerDataUpdateState } from "../atom/formAtom";
 import { swalFireConfirm, swalFireResult } from "../libs/swalFire";
+import { loadingState } from "../atom/loadingAtom";
 
 export default function AccordionComponent({
   id,
@@ -26,6 +27,7 @@ export default function AccordionComponent({
   const [triggerDataUpdate, setTriggerDataUpdate] = useRecoilState(
     triggerDataUpdateState
   );
+  const setGlobalLoading = useSetRecoilState(loadingState);
 
   const handleDelete = async () => {
     try {
@@ -35,6 +37,7 @@ export default function AccordionComponent({
         "warning"
       );
       if (response.isConfirmed) {
+        setGlobalLoading(true);
         if (type == "module") {
           await deleteModule(id);
         } else if (type == "video") {
@@ -45,6 +48,8 @@ export default function AccordionComponent({
       }
     } catch (error) {
       await swalFireResult("Gagal", `Gagal menghapus ${title}`, "error");
+    } finally {
+      setGlobalLoading(false);
     }
   };
 
@@ -52,7 +57,7 @@ export default function AccordionComponent({
     try {
       setEdit(false);
       if (type == "module") {
-        await editModule({ title: currentTitle }, id);
+        await editModule({ title: currentTitle, isLocked: isLocked }, id);
       } else if (type == "video") {
         await editVideo({ title: currentTitle }, id);
       }

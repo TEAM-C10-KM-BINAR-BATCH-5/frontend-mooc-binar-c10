@@ -6,6 +6,7 @@ import EditVideo from "./EditVideo";
 import { triggerDataUpdateState } from "../atom/formAtom";
 import { useRecoilState } from "recoil";
 import { coursePriceState } from "../atom/courseAtom";
+import { loadingState } from "../atom/loadingAtom";
 
 // ... (other imports and code)
 
@@ -16,14 +17,19 @@ export default function EditModul() {
   const [modules, setModules] = useState([]);
   const { id } = useParams();
   const [coursePrice] = useRecoilState(coursePriceState);
+  const [isLoading, setIsLoading] = useState(false);
+  const [globalLoading, setGlobalLoading] = useRecoilState(loadingState);
 
   useEffect(() => {
     const fetchModuleData = async () => {
       try {
+        setIsLoading(true);
         const data = await getModulesByCourseId(id);
         setModules(data);
       } catch (error) {
         console.log("Error fetching course data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -32,13 +38,20 @@ export default function EditModul() {
 
   const handleAddModule = async (e) => {
     e.preventDefault();
-    const response = await createModule({
-      title: "New Module",
-      isLocked: false,
-      courseId: id,
-    });
+    try {
+      setGlobalLoading(true);
+      await createModule({
+        title: "New Module",
+        isLocked: false,
+        courseId: id,
+      });
 
-    setTriggerDataUpdate(!triggerDataUpdate);
+      setTriggerDataUpdate(!triggerDataUpdate);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setGlobalLoading(false);
+    }
   };
 
   const handleAddVideo = async (index, moduleId) => {
@@ -55,41 +68,49 @@ export default function EditModul() {
 
   return (
     <div className="flex flex-col gap-3 items-start justify-center p-4">
-      {modules.length > 0 ? (
+      {!isLoading && (
         <>
           <h1 className="text-costumeBlue text-2xl md:text-3xl font-bold mb-3">
             Modul
           </h1>
-          {modules &&
-            modules.map((data, index) => (
-              <AccordionComponent
-                id={data.id}
-                title={data.title}
-                index={data.id}
-                key={data.id}
-                isLocked={data.isLocked}
-                price={coursePrice}
-                type="module"
-              >
-                {data.Videos.map((video) => (
+          {modules.length > 0 ? (
+            <>
+              {modules &&
+                modules.map((data, index) => (
                   <AccordionComponent
-                    id={video.id}
-                    title={video.title}
-                    index={video.id}
-                    key={video.title}
-                    type="video"
+                    id={data.id}
+                    title={data.title}
+                    index={data.id}
+                    key={data.id}
+                    isLocked={data.isLocked}
+                    price={coursePrice}
+                    type="module"
                   >
-                    <EditVideo video={video} />
+                    {data.Videos.map((video) => (
+                      <AccordionComponent
+                        id={video.id}
+                        title={video.title}
+                        index={video.id}
+                        key={video.title}
+                        type="video"
+                      >
+                        <EditVideo video={video} />
+                      </AccordionComponent>
+                    ))}
+                    <button
+                      className="p-2 border-2 border-costumeBlue text-costumeBlue rounded-lg opacity-50 text-sm"
+                      onClick={() => handleAddVideo(index, data.id)}
+                    >
+                      + Tambah Video
+                    </button>
                   </AccordionComponent>
                 ))}
-                <button
-                  className="p-2 border-2 border-costumeBlue text-costumeBlue rounded-lg opacity-50 text-sm"
-                  onClick={() => handleAddVideo(index, data.id)}
-                >
-                  + Tambah Video
-                </button>
-              </AccordionComponent>
-            ))}
+            </>
+          ) : (
+            <div className="h-full w-full flex justify-center items-center">
+              <h1 className="text-3xl">Tidak ada modul</h1>
+            </div>
+          )}
           <button
             className="p-2 border-2 border-costumeBlue text-costumeBlue rounded-lg opacity-50 text-sm"
             onClick={handleAddModule}
@@ -97,8 +118,10 @@ export default function EditModul() {
             + Tambah Modul
           </button>
         </>
-      ) : (
-        <div className="flex items-center justify-center h-screen w-full py-10">
+      )}
+
+      {isLoading && (
+        <div className="flex items-center justify-center h-1/3 w-full py-10">
           <div className="custom-loader"></div>
         </div>
       )}

@@ -46,22 +46,18 @@ export default function TableCourse() {
     e.preventDefault();
     const { name, value, checked } = e.target;
     if (name === "categoryIds") {
-      // Handle checkboxes for categories
       if (checked) {
-        // If checkbox is checked, add the category ID to the array
         setCourseFilter((prev) => ({
           ...prev,
           [name]: [...prev[name], value],
         }));
       } else {
-        // If checkbox is unchecked, remove the category ID from the array
         setCourseFilter((prev) => ({
           ...prev,
           [name]: prev[name].filter((id) => id !== value),
         }));
       }
     } else {
-      // Handle other input changes
       setCourseFilter((prev) => ({
         ...prev,
         [name]: value,
