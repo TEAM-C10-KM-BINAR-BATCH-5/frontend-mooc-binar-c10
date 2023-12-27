@@ -57,7 +57,7 @@ function Table() {
 			setSearch(dataTransaction)
 		}
 		fetchDataTransaction()
-	}, [triggerDataUpdate])
+	}, [triggerDataUpdate, paymentFilter])
 
 	// pagination
 	const indexOfLastItem = currentPage * itemsPerPage
@@ -118,8 +118,6 @@ function Table() {
 		)
 		setSearch(filteredResults)
 	}
-
-	const resetCourseFilter = useResetRecoilState(courseFilterState)
 
 	return (
 		<>
