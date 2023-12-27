@@ -263,7 +263,7 @@ export const getDataTransaction = async (filters = {}) => {
 
 		return response.data.data
 	} catch (error) {
-		console.error("Error fetching course data:", error.message)
+		console.error("Error fetching course data:", error.response.data)
 		return []
 	}
 }

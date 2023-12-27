@@ -130,7 +130,7 @@ function Table() {
 														value={method}
 														className="cursor-pointer"
 														checked={
-															paymentFilter.method == method ? true : false
+															paymentFilter.paymentType == method ? true : false
 														}
 														onChange={handleInputChange}
 													/>
