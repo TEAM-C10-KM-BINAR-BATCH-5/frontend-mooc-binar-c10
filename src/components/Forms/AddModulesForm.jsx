@@ -132,9 +132,9 @@ export default function AddModuleForm() {
         <AnimatePresence>
           {formData.map((data, index) => (
             <motion.div
-              initial={{ x: 500 }}
+              initial={{ x: 300 }}
               animate={{ x: 0 }}
-              exit={{ x: 600 }}
+              exit={{ x: 580 }}
               key={index}
             >
               <div className=" w-full shadow-md border-2 border-gray-300 p-5 rounded-lg m-3">

@@ -20,19 +20,23 @@ export default function EditModul() {
   const [isLoading, setIsLoading] = useState(false);
   const [globalLoading, setGlobalLoading] = useRecoilState(loadingState);
 
+  const [firstFetch, setFirstFetch] = useState(true);
+
   useEffect(() => {
     const fetchModuleData = async () => {
       try {
-        setIsLoading(true);
+        setIsLoading(firstFetch);
+        setGlobalLoading(!firstFetch);
         const data = await getModulesByCourseId(id);
         setModules(data);
+        setFirstFetch(false);
       } catch (error) {
         console.log("Error fetching course data:", error);
       } finally {
         setIsLoading(false);
+        setGlobalLoading(false);
       }
     };
-
     fetchModuleData();
   }, [id, triggerDataUpdate]);
 
@@ -55,15 +59,22 @@ export default function EditModul() {
   };
 
   const handleAddVideo = async (index, moduleId) => {
-    const response = await createVideo({
-      no: modules[index].Videos.length + 1,
-      title: "New Video",
-      videoUrl: "test",
-      duration: "0",
-      moduleId: moduleId,
-    });
+    try {
+      setGlobalLoading(true);
+      await createVideo({
+        no: modules[index].Videos.length + 1,
+        title: "New Video",
+        videoUrl: "test",
+        duration: "0",
+        moduleId: moduleId,
+      });
 
-    setTriggerDataUpdate(!triggerDataUpdate);
+      setTriggerDataUpdate(!triggerDataUpdate);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setGlobalLoading(false);
+    }
   };
 
   return (
