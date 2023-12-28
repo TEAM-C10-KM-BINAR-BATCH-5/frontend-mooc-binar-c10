@@ -35,10 +35,10 @@ function Table() {
   const [transaction, setTransaction] = useState([]);
   const [search, setSearch] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const [loading, setLoading] = useState(true);
 
   const [paymentFilter, setPaymentFilter] = useRecoilState(paymentFilterState);
   const resetPaymentFilter = useResetRecoilState(paymentFilterState);
@@ -55,6 +55,10 @@ function Table() {
   }, [triggerDataUpdate, paymentFilter]);
 
   // pagination
+  useEffect(() => {
+    setCurrentPage(1); // Set currentPage kembali ke halaman pertama saat search berubah
+  }, [search]);
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = search.slice(indexOfFirstItem, indexOfLastItem);
@@ -206,7 +210,7 @@ function Table() {
                   <tr>
                     <td
                       colSpan="6"
-                      className="text-center py-4 bg-red-500 text-white"
+                      className="text-center py-2 bg-red-500 text-white"
                     >
                       <strong>Data not found.</strong>
                     </td>

@@ -124,6 +124,10 @@ export default function TableCourse() {
   };
 
   //pagination
+
+  useEffect(() => {
+    setCurrentPage(1); // Set currentPage kembali ke halaman pertama saat search berubah
+  }, [search]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
 
