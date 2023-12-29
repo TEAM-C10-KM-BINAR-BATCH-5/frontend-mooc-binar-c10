@@ -172,7 +172,7 @@ export default function AddCourseForm() {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Image
+            Gambar
           </label>
           {formData.image && (
             <div>

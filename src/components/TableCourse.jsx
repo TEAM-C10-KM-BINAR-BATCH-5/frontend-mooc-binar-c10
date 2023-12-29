@@ -273,7 +273,7 @@ export default function TableCourse() {
               <Input
                 value={searchTerm}
                 onChange={handleSearchChange}
-                label="Search"
+                label="Cari nama kelas"
                 color="indigo"
                 containerProps={{
                   className: "mb-1",
@@ -322,7 +322,7 @@ export default function TableCourse() {
                       colSpan="6"
                       className="text-center py-2 bg-red-500 text-white"
                     >
-                      <strong>Data not found.</strong>
+                      <strong>Data tidak ditemukan.</strong>
                     </td>
                   </tr>
                 ) : (

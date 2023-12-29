@@ -163,7 +163,7 @@ function Table() {
               <Input
                 value={searchTerm}
                 onChange={handleSearchChange}
-                label="Search by user & class "
+                label="Cari nama user dan kelas"
                 color="indigo"
                 containerProps={{
                   className: "mb-1",
@@ -212,7 +212,7 @@ function Table() {
                       colSpan="6"
                       className="text-center py-2 bg-red-500 text-white"
                     >
-                      <strong>Data not found.</strong>
+                      <strong>Data tidak ditemukan.</strong>
                     </td>
                   </tr>
                 ) : (

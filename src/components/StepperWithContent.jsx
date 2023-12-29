@@ -1,5 +1,6 @@
 import React from "react";
 import { Stepper, Step, Button } from "@material-tailwind/react";
+import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 
 export function StepperWithContent({ addCourse, addModule }) {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -39,18 +40,18 @@ export function StepperWithContent({ addCourse, addModule }) {
 
       <div className="mt-12 w-[90%] flex justify-between">
         <Button
-          className="bg-costumeBlue"
+          className="bg-costumeBlue px-4 py-2"
           onClick={handlePrev}
           disabled={isFirstStep}
         >
-          Prev
+          <CaretLeft weight="bold" size={20} />
         </Button>
         <Button
-          className="bg-costumeBlue"
+          className="bg-costumeBlue px-4 py-2"
           onClick={handleNext}
           disabled={isLastStep}
         >
-          Next
+          <CaretRight weight="bold" size={20} />
         </Button>
       </div>
     </div>
