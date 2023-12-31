@@ -137,7 +137,7 @@ export default function AddModuleForm() {
               exit={{ x: 580 }}
               key={index}
             >
-              <div className=" w-full shadow-md border-2 border-gray-300 p-5 rounded-lg m-3">
+              <div className=" w-full shadow-md border-2 border-gray-300 p-5 rounded-lg m-0 md:m-3">
                 <p className="py-5 text-costumeBlue font-bold text-xl text-start">
                   Modul {index + 1}
                 </p>

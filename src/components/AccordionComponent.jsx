@@ -56,11 +56,13 @@ export default function AccordionComponent({
   const handleEditTitle = async () => {
     try {
       setEdit(false);
+      setGlobalLoading(true);
       if (type == "module") {
         await editModule({ title: currentTitle, isLocked: isLocked }, id);
       } else if (type == "video") {
         await editVideo({ title: currentTitle }, id);
       }
+      setGlobalLoading(false);
       setTriggerDataUpdate(!triggerDataUpdate);
     } catch (error) {
       await swalFireResult("Gagal", `Gagal mengubah data`, "error");

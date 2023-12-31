@@ -12,7 +12,7 @@ export default function AddCourse() {
   const [isLoading] = useRecoilState(loadingState);
   const setShowModal = useSetRecoilState(modalState);
   return (
-    <div className="bg-white w-[370px] sm:w-[720px] h-4/5 p-2 rounded-lg flex flex-col relative overflow-y-auto overflow-x-hidden">
+    <div className="bg-white w-[370px] sm:w-[720px] h-4/5 p-0 md:p-2 rounded-lg flex flex-col relative overflow-y-auto overflow-x-hidden">
       <button
         onClick={() => setShowModal(false)}
         className="w-8 absolute top-0 right-0 m-2 flex justify-center items-center  rounded-full hover:bg-gray-300 focus:outline-none"
